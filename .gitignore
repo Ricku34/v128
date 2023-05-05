@@ -1,0 +1,6 @@
+./build
+./dist
+./doc
+./node_modules
+./wabt
+package-lock.json

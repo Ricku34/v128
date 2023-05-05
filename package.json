@@ -1,0 +1,19 @@
+{
+  "name": "v128",
+  "version": "0.1.0",
+  "description": "WebAssembly & Javascript module for fast 3D matrix vector calculations using SIMD vector 128 bits.",
+  "main": "dist/v128-node.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gl-matrix": "^3.4.3",
+    "jaguarjs-jsdoc": "^1.0.2",
+    "jsdoc": "^4.0.2",
+    "webpack": "^5.81.0",
+    "webpack-cli": "^5.0.2"
+  }
+}
