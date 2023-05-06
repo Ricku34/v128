@@ -41,3 +41,17 @@
 		local.get 2
 		call $storeM4 
 	)
+	(func (export "lookAt") (param $pPos i32) (param $pTarget i32) (param $pDestM4 i32) (result i32)
+
+		local.get $pPos
+		v128.load ;; position vector
+		
+		local.get $pTarget
+		v128.load ;; target position vector
+		
+		call $lookAt
+		local.get $pDestM4
+		call $storeM4 
+
+		local.get $pDestM4
+	)

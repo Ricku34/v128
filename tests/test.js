@@ -1,5 +1,5 @@
 const {v128} = require('..');
-const {vec3} = require('gl-matrix');
+const {vec3, mat4} = require('gl-matrix');
 const EPSILON = 0.000001;
 console.assert(v128);
 console.assert(v128.init);
@@ -33,6 +33,12 @@ console.assert(v128.init);
 	console.assert( Math.abs(v128.vector.length(tmp)-vec3.length(v128.memory.slice(tmp))) < EPSILON);
 	tmp = v128.vector.normalize(tmp,tmp);
 	console.assert( Math.abs(v128.vector.length(tmp)-1.0) < EPSILON);
+	v128.memory.free(tmp);
+
+	var lookAtMat =  v128.matrix.lookAt(camPos,AT,v128.matrix.new());
+	var glLookAt = mat4.lookAt(mat4.create(),v128.memory.slice(camPos),v128.memory.slice(AT),v128.memory.slice(UP));
+	glLookAt[15]= 0; // not true homogeneous coordinates position (normaly we don't care in 3D space) 
+	console.assert(mat4.equals(glLookAt, v128.memory.slice(lookAtMat)))
 
 
 	console.log("SUCCESS");

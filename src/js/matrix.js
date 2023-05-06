@@ -3,6 +3,7 @@ exports.matrix = function (v128Instance, v128) {
 		mul : v128Instance.exports.mulM4M4,
 		multiply : v128Instance.exports.mulM4M4,
 		tranform : v128Instance.exports.mulM4V4,
+		lookAt : v128Instance.exports.lookAt,
 		new : function(...vals) { 
 			var p = v128.memory.alloc(16);
 			if(p && vals.length) {
