@@ -9,7 +9,7 @@ WAT_SOURCES := $(sort $(wildcard ./src/wat/*.wat))
 JS_SOURCES := $(wildcard ./src/js/*.js)
 TARGETS := ./dist/$(PROJECT).js ./dist/$(PROJECT)-min.js ./dist/$(PROJECT)-node.js
 
-all : ./node_modules $(WABT_DIR) $(BUILD_DIR) $(TARGETS) 
+all : ./node_modules $(WABT_DIR) $(BUILD_DIR) $(TARGETS) ./README.md
 	@echo SUCCESS
 
 cleanall:
@@ -37,8 +37,10 @@ $(WASM_OBJECT) : $(WAT_OBJECT)
 ./node_modules:
 	@npm install
 
-./doc: $(JS_SOURCES) ./README.md
-	@npx jsdoc -c jsdoc.json -t node_modules/jaguarjs-jsdoc -d $@ $^
+# ./doc: $(JS_SOURCES) ./README.md
+# 	@npx jsdoc -c jsdoc.json -t node_modules/jaguarjs-jsdoc -d $@ $^
+./README.md : ./src/README.hbs $(JS_SOURCES)
+	npx jsdoc2md -t $< $(JS_SOURCES) > $@
 
 $(WABT_DIR):
 	@git clone --recursive https://github.com/WebAssembly/wabt

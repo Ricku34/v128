@@ -11,9 +11,9 @@ const v128 = {};
 let isReady = 0;
 /**
  * Promise resolve when API is ready 
- * @name v128#ready
  * @type {Promise}
- * @readonly
+ * @memberof v128
+ * @static
  */
 v128.ready = new Promise((resolve) => {
 

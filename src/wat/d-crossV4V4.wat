@@ -59,7 +59,7 @@
 			local.get 1
 			v128.load ;; vector B
 
-			f32x4.mul
+			f32x4.div
 		v128.store
 		local.get 2
 	)

@@ -33,9 +33,9 @@ exports.memoryManager = function (v128Instance) {
 	}
 
 	/**
-	 * Randomize all the memory
+	 * allocate float memory array
 	 * @method v128.memory#alloc
-	 * @param {Number} size the number of float 32 to allocate
+	 * @param {Number} size the number of float to allocate
 	 * @returns {UInt32} the pointor from v128 memory
 	 */
 	manager.alloc = function(size) {
@@ -52,6 +52,11 @@ exports.memoryManager = function (v128Instance) {
 		return p;
 	}
 
+	/**
+	 * free float memory
+	 * @method v128.memory#free
+	 * @param {UInt32} pointer  the pointor to free
+	 */
 	manager.free = function(pointer) {
 		var idx = pointer/4;
 		var size = allocated[idx];
@@ -62,6 +67,12 @@ exports.memoryManager = function (v128Instance) {
 		released[size].push(idx);
 	}
 
+	/**
+	 * fill float memory with given values
+	 * @method v128.memory#fill
+	 * @param {UInt32} pointer 
+	 * @param  {...Numbers} vals number values to fill
+	 */
 	manager.fill = function(pointer, ...vals) {
 		var idx = pointer/4;
 		var size = allocated[idx];
@@ -70,12 +81,26 @@ exports.memoryManager = function (v128Instance) {
 		}
 	}
 
+	/**
+	 * get copy of portion float memory
+	 * @method v128.memory#slice
+	 * @param {UInt32} pointer 
+	 * @returns {Float32Array} 
+	 * 
+	 */
 	manager.slice = function(pointer) {
 		var idx = pointer/4;
 		var size = allocated[idx];
 		return floatBuffer.slice(idx,idx+size);
 	}
 
+	/**
+	 * get read/write access of portion float memory
+	 * @method v128.memory#toArray
+	 * @param {UInt32} pointer 
+	 * @returns {Float32Array} 
+	 * 
+	 */
 	manager.toArray = function(pointer) {
 		var idx = pointer/4;
 		var size = allocated[idx];
