@@ -11,8 +11,7 @@
   "license": "ISC",
   "devDependencies": {
     "gl-matrix": "^3.4.3",
-    "jaguarjs-jsdoc": "^1.0.2",
-    "jsdoc": "^4.0.2",
+    "jsdoc-to-markdown": "^8.0.0",
     "webpack": "^5.81.0",
     "webpack-cli": "^5.0.2"
   }

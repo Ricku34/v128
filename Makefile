@@ -9,7 +9,7 @@ WAT_SOURCES := $(sort $(wildcard ./src/wat/*.wat))
 JS_SOURCES := $(wildcard ./src/js/*.js)
 TARGETS := ./dist/$(PROJECT).js ./dist/$(PROJECT)-min.js ./dist/$(PROJECT)-node.js
 
-all : ./node_modules $(WABT_DIR) $(BUILD_DIR) $(TARGETS) ./doc
+all : ./node_modules $(WABT_DIR) $(BUILD_DIR) $(TARGETS) 
 	@echo SUCCESS
 
 cleanall:
