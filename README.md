@@ -52,10 +52,10 @@ WebAssembly & Javascript module fast matrix vector calculations using SIMD vecto
         * [.length(pVec)](#v128.vector+length) ⇒ <code>Number</code>
         * [.normalize(pVec, pVecDest)](#v128.vector+normalize) ⇒ <code>UInt32</code>
         * [.add(pVecA, pVecA, pVecDest)](#v128.vector+add) ⇒ <code>UInt32</code>
-        * [.add(pVecA, pVecA, pVecDest)](#v128.vector+add) ⇒ <code>UInt32</code>
-        * [.add(pVecA, pVecA, pVecDest)](#v128.vector+add) ⇒ <code>UInt32</code>
-        * [.add(pVecA, pVecA, pVecDest)](#v128.vector+add) ⇒ <code>UInt32</code>
-        * [.add(pVecA, pVecA, pVecDest)](#v128.vector+add) ⇒ <code>UInt32</code>
+        * [.sub(pVecA, pVecA, pVecDest)](#v128.vector+sub) ⇒ <code>UInt32</code>
+        * [.mul(pVecA, pVecA, pVecDest)](#v128.vector+mul) ⇒ <code>UInt32</code>
+        * [.div(pVecA, pVecA, pVecDest)](#v128.vector+div) ⇒ <code>UInt32</code>
+        * [.cross(pVecA, pVecA, pVecDest)](#v128.vector+cross) ⇒ <code>UInt32</code>
     * [.init(size)](#v128.init) ⇒ <code>Promise</code>
 
 <a name="v128.ready"></a>
@@ -251,10 +251,10 @@ vector API
     * [.length(pVec)](#v128.vector+length) ⇒ <code>Number</code>
     * [.normalize(pVec, pVecDest)](#v128.vector+normalize) ⇒ <code>UInt32</code>
     * [.add(pVecA, pVecA, pVecDest)](#v128.vector+add) ⇒ <code>UInt32</code>
-    * [.add(pVecA, pVecA, pVecDest)](#v128.vector+add) ⇒ <code>UInt32</code>
-    * [.add(pVecA, pVecA, pVecDest)](#v128.vector+add) ⇒ <code>UInt32</code>
-    * [.add(pVecA, pVecA, pVecDest)](#v128.vector+add) ⇒ <code>UInt32</code>
-    * [.add(pVecA, pVecA, pVecDest)](#v128.vector+add) ⇒ <code>UInt32</code>
+    * [.sub(pVecA, pVecA, pVecDest)](#v128.vector+sub) ⇒ <code>UInt32</code>
+    * [.mul(pVecA, pVecA, pVecDest)](#v128.vector+mul) ⇒ <code>UInt32</code>
+    * [.div(pVecA, pVecA, pVecDest)](#v128.vector+div) ⇒ <code>UInt32</code>
+    * [.cross(pVecA, pVecA, pVecDest)](#v128.vector+cross) ⇒ <code>UInt32</code>
 
 <a name="v128.vector+new"></a>
 
@@ -318,9 +318,9 @@ fast add two 3D Homogeneous coordinates vector (WebAssembly method)
 | pVecA | <code>UInt32</code> | pointer to vector B |
 | pVecDest | <code>UInt32</code> | pointer to receive sum result vector ( A + B ) |
 
-<a name="v128.vector+add"></a>
+<a name="v128.vector+sub"></a>
 
-#### vector.add(pVecA, pVecA, pVecDest) ⇒ <code>UInt32</code>
+#### vector.sub(pVecA, pVecA, pVecDest) ⇒ <code>UInt32</code>
 fast sub two 3D Homogeneous coordinates vector (WebAssembly method)
 
 **Kind**: instance method of [<code>vector</code>](#v128.vector)  
@@ -332,9 +332,9 @@ fast sub two 3D Homogeneous coordinates vector (WebAssembly method)
 | pVecA | <code>UInt32</code> | pointer to vector B |
 | pVecDest | <code>UInt32</code> | pointer to receive sum result vector ( A - B ) |
 
-<a name="v128.vector+add"></a>
+<a name="v128.vector+mul"></a>
 
-#### vector.add(pVecA, pVecA, pVecDest) ⇒ <code>UInt32</code>
+#### vector.mul(pVecA, pVecA, pVecDest) ⇒ <code>UInt32</code>
 fast multiply two 3D Homogeneous coordinates vector (WebAssembly method)
 
 **Kind**: instance method of [<code>vector</code>](#v128.vector)  
@@ -346,9 +346,9 @@ fast multiply two 3D Homogeneous coordinates vector (WebAssembly method)
 | pVecA | <code>UInt32</code> | pointer to vector B |
 | pVecDest | <code>UInt32</code> | pointer to receive multiply result vector ( A * B ) |
 
-<a name="v128.vector+add"></a>
+<a name="v128.vector+div"></a>
 
-#### vector.add(pVecA, pVecA, pVecDest) ⇒ <code>UInt32</code>
+#### vector.div(pVecA, pVecA, pVecDest) ⇒ <code>UInt32</code>
 fast divide two 3D Homogeneous coordinates vector (WebAssembly method)
 
 **Kind**: instance method of [<code>vector</code>](#v128.vector)  
@@ -360,9 +360,9 @@ fast divide two 3D Homogeneous coordinates vector (WebAssembly method)
 | pVecA | <code>UInt32</code> | pointer to vector B |
 | pVecDest | <code>UInt32</code> | pointer to receive divide result vector ( A / B ) |
 
-<a name="v128.vector+add"></a>
+<a name="v128.vector+cross"></a>
 
-#### vector.add(pVecA, pVecA, pVecDest) ⇒ <code>UInt32</code>
+#### vector.cross(pVecA, pVecA, pVecDest) ⇒ <code>UInt32</code>
 fast cross product of two 3D Homogeneous coordinates vector (WebAssembly method)
 
 **Kind**: instance method of [<code>vector</code>](#v128.vector)  

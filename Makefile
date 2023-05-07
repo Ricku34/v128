@@ -40,7 +40,7 @@ $(WASM_OBJECT) : $(WAT_OBJECT)
 # ./doc: $(JS_SOURCES) ./README.md
 # 	@npx jsdoc -c jsdoc.json -t node_modules/jaguarjs-jsdoc -d $@ $^
 ./README.md : ./src/README.hbs $(JS_SOURCES)
-	npx jsdoc2md -t $< $(JS_SOURCES) > $@
+	@npx jsdoc2md -t $< $(JS_SOURCES) > $@
 
 $(WABT_DIR):
 	@git clone --recursive https://github.com/WebAssembly/wabt
