@@ -20,7 +20,10 @@ let viewMatrix = v128.matrix.lookAt(cameraPos,center,v128.matrix.new());
 let projectionMatrix = v128.matrix.perspective(Math.PI/2,4/3,0.1,1000,v128.matrix.new());
 let viewProjection = v128.matrix.multiply(viewMatrix, projectionMatrix,v128.matrix.new());
 ```
-
+WebGL compatibility :
+```JavaScript
+gl.uniformMatrix4fv(projectionLocation, false, v128.memory.toArray(projectionMatrix));
+```
 ## API Reference
 
 <a name="v128"></a>
@@ -52,11 +55,11 @@ WebAssembly & Javascript module fast matrix vector calculations using SIMD vecto
         * [.free(pointer)](#v128.vector+free)
         * [.length(pVec)](#v128.vector+length) ⇒ <code>Number</code>
         * [.normalize(pVec, pVecDest)](#v128.vector+normalize) ⇒ <code>UInt32</code>
-        * [.add(pVecA, pVecA, pVecDest)](#v128.vector+add) ⇒ <code>UInt32</code>
-        * [.sub(pVecA, pVecA, pVecDest)](#v128.vector+sub) ⇒ <code>UInt32</code>
-        * [.mul(pVecA, pVecA, pVecDest)](#v128.vector+mul) ⇒ <code>UInt32</code>
-        * [.div(pVecA, pVecA, pVecDest)](#v128.vector+div) ⇒ <code>UInt32</code>
-        * [.cross(pVecA, pVecA, pVecDest)](#v128.vector+cross) ⇒ <code>UInt32</code>
+        * [.add(pVecA, pVecB, pVecDest)](#v128.vector+add) ⇒ <code>UInt32</code>
+        * [.sub(pVecA, pVecB, pVecDest)](#v128.vector+sub) ⇒ <code>UInt32</code>
+        * [.mul(pVecA, pVecB, pVecDest)](#v128.vector+mul) ⇒ <code>UInt32</code>
+        * [.div(pVecA, pVecB, pVecDest)](#v128.vector+div) ⇒ <code>UInt32</code>
+        * [.cross(pVecA, pVecB, pVecDest)](#v128.vector+cross) ⇒ <code>UInt32</code>
     * [.init(size)](#v128.init) ⇒ <code>Promise</code>
 
 <a name="v128.ready"></a>
@@ -265,11 +268,11 @@ vector API
     * [.free(pointer)](#v128.vector+free)
     * [.length(pVec)](#v128.vector+length) ⇒ <code>Number</code>
     * [.normalize(pVec, pVecDest)](#v128.vector+normalize) ⇒ <code>UInt32</code>
-    * [.add(pVecA, pVecA, pVecDest)](#v128.vector+add) ⇒ <code>UInt32</code>
-    * [.sub(pVecA, pVecA, pVecDest)](#v128.vector+sub) ⇒ <code>UInt32</code>
-    * [.mul(pVecA, pVecA, pVecDest)](#v128.vector+mul) ⇒ <code>UInt32</code>
-    * [.div(pVecA, pVecA, pVecDest)](#v128.vector+div) ⇒ <code>UInt32</code>
-    * [.cross(pVecA, pVecA, pVecDest)](#v128.vector+cross) ⇒ <code>UInt32</code>
+    * [.add(pVecA, pVecB, pVecDest)](#v128.vector+add) ⇒ <code>UInt32</code>
+    * [.sub(pVecA, pVecB, pVecDest)](#v128.vector+sub) ⇒ <code>UInt32</code>
+    * [.mul(pVecA, pVecB, pVecDest)](#v128.vector+mul) ⇒ <code>UInt32</code>
+    * [.div(pVecA, pVecB, pVecDest)](#v128.vector+div) ⇒ <code>UInt32</code>
+    * [.cross(pVecA, pVecB, pVecDest)](#v128.vector+cross) ⇒ <code>UInt32</code>
 
 <a name="v128.vector+new"></a>
 
@@ -321,7 +324,7 @@ fast normalize 3D Homogeneous coordinates vector (WebAssembly method)
 
 <a name="v128.vector+add"></a>
 
-#### vector.add(pVecA, pVecA, pVecDest) ⇒ <code>UInt32</code>
+#### vector.add(pVecA, pVecB, pVecDest) ⇒ <code>UInt32</code>
 fast add two 3D Homogeneous coordinates vector (WebAssembly method)
 
 **Kind**: instance method of [<code>vector</code>](#v128.vector)  
@@ -330,12 +333,12 @@ fast add two 3D Homogeneous coordinates vector (WebAssembly method)
 | Param | Type | Description |
 | --- | --- | --- |
 | pVecA | <code>UInt32</code> | pointer to vector A |
-| pVecA | <code>UInt32</code> | pointer to vector B |
+| pVecB | <code>UInt32</code> | pointer to vector B |
 | pVecDest | <code>UInt32</code> | pointer to receive sum result vector ( A + B ) |
 
 <a name="v128.vector+sub"></a>
 
-#### vector.sub(pVecA, pVecA, pVecDest) ⇒ <code>UInt32</code>
+#### vector.sub(pVecA, pVecB, pVecDest) ⇒ <code>UInt32</code>
 fast sub two 3D Homogeneous coordinates vector (WebAssembly method)
 
 **Kind**: instance method of [<code>vector</code>](#v128.vector)  
@@ -344,12 +347,12 @@ fast sub two 3D Homogeneous coordinates vector (WebAssembly method)
 | Param | Type | Description |
 | --- | --- | --- |
 | pVecA | <code>UInt32</code> | pointer to vector A |
-| pVecA | <code>UInt32</code> | pointer to vector B |
+| pVecB | <code>UInt32</code> | pointer to vector B |
 | pVecDest | <code>UInt32</code> | pointer to receive sum result vector ( A - B ) |
 
 <a name="v128.vector+mul"></a>
 
-#### vector.mul(pVecA, pVecA, pVecDest) ⇒ <code>UInt32</code>
+#### vector.mul(pVecA, pVecB, pVecDest) ⇒ <code>UInt32</code>
 fast multiply two 3D Homogeneous coordinates vector (WebAssembly method)
 
 **Kind**: instance method of [<code>vector</code>](#v128.vector)  
@@ -358,12 +361,12 @@ fast multiply two 3D Homogeneous coordinates vector (WebAssembly method)
 | Param | Type | Description |
 | --- | --- | --- |
 | pVecA | <code>UInt32</code> | pointer to vector A |
-| pVecA | <code>UInt32</code> | pointer to vector B |
+| pVecB | <code>UInt32</code> | pointer to vector B |
 | pVecDest | <code>UInt32</code> | pointer to receive multiply result vector ( A * B ) |
 
 <a name="v128.vector+div"></a>
 
-#### vector.div(pVecA, pVecA, pVecDest) ⇒ <code>UInt32</code>
+#### vector.div(pVecA, pVecB, pVecDest) ⇒ <code>UInt32</code>
 fast divide two 3D Homogeneous coordinates vector (WebAssembly method)
 
 **Kind**: instance method of [<code>vector</code>](#v128.vector)  
@@ -372,12 +375,12 @@ fast divide two 3D Homogeneous coordinates vector (WebAssembly method)
 | Param | Type | Description |
 | --- | --- | --- |
 | pVecA | <code>UInt32</code> | pointer to vector A |
-| pVecA | <code>UInt32</code> | pointer to vector B |
+| pVecB | <code>UInt32</code> | pointer to vector B |
 | pVecDest | <code>UInt32</code> | pointer to receive divide result vector ( A / B ) |
 
 <a name="v128.vector+cross"></a>
 
-#### vector.cross(pVecA, pVecA, pVecDest) ⇒ <code>UInt32</code>
+#### vector.cross(pVecA, pVecB, pVecDest) ⇒ <code>UInt32</code>
 fast cross product of two 3D Homogeneous coordinates vector (WebAssembly method)
 
 **Kind**: instance method of [<code>vector</code>](#v128.vector)  
@@ -386,7 +389,7 @@ fast cross product of two 3D Homogeneous coordinates vector (WebAssembly method)
 | Param | Type | Description |
 | --- | --- | --- |
 | pVecA | <code>UInt32</code> | pointer to vector A |
-| pVecA | <code>UInt32</code> | pointer to vector B |
+| pVecB | <code>UInt32</code> | pointer to vector B |
 | pVecDest | <code>UInt32</code> | pointer to receive cross product result vector ( A.B ) |
 
 <a name="v128.init"></a>

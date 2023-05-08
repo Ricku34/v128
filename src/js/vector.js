@@ -40,7 +40,7 @@ exports.vector = function (v128Instance, v128) {
 		 * fast add two 3D Homogeneous coordinates vector (WebAssembly method)
 		 * @method v128.vector#add
 		 * @param {UInt32} pVecA pointer to vector A
-		 * @param {UInt32} pVecA pointer to vector B
+		 * @param {UInt32} pVecB pointer to vector B
 		 * @param {UInt32} pVecDest pointer to receive sum result vector ( A + B )
 		 * @returns {UInt32} the pointer to result vector
 		 */
@@ -50,7 +50,7 @@ exports.vector = function (v128Instance, v128) {
 		 * fast sub two 3D Homogeneous coordinates vector (WebAssembly method)
 		 * @method v128.vector#sub
 		 * @param {UInt32} pVecA pointer to vector A
-		 * @param {UInt32} pVecA pointer to vector B
+		 * @param {UInt32} pVecB pointer to vector B
 		 * @param {UInt32} pVecDest pointer to receive sum result vector ( A - B )
 		 * @returns {UInt32} the pointer to result vector
 		 */
@@ -60,7 +60,7 @@ exports.vector = function (v128Instance, v128) {
 		 * fast multiply two 3D Homogeneous coordinates vector (WebAssembly method)
 		 * @method v128.vector#mul
 		 * @param {UInt32} pVecA pointer to vector A
-		 * @param {UInt32} pVecA pointer to vector B
+		 * @param {UInt32} pVecB pointer to vector B
 		 * @param {UInt32} pVecDest pointer to receive multiply result vector ( A * B )
 		 * @returns {UInt32} the pointer to result vector
 		 */
@@ -70,7 +70,7 @@ exports.vector = function (v128Instance, v128) {
 		 * fast divide two 3D Homogeneous coordinates vector (WebAssembly method)
 		 * @method v128.vector#div
 		 * @param {UInt32} pVecA pointer to vector A
-		 * @param {UInt32} pVecA pointer to vector B
+		 * @param {UInt32} pVecB pointer to vector B
 		 * @param {UInt32} pVecDest pointer to receive divide result vector ( A / B )
 		 * @returns {UInt32} the pointer to result vector
 		 */
@@ -80,7 +80,7 @@ exports.vector = function (v128Instance, v128) {
 		 * fast cross product of two 3D Homogeneous coordinates vector (WebAssembly method)
 		 * @method v128.vector#cross
 		 * @param {UInt32} pVecA pointer to vector A
-		 * @param {UInt32} pVecA pointer to vector B
+		 * @param {UInt32} pVecB pointer to vector B
 		 * @param {UInt32} pVecDest pointer to receive cross product result vector ( A.B )
 		 * @returns {UInt32} the pointer to result vector
 		 */
