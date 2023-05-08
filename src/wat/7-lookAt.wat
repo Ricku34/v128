@@ -41,7 +41,8 @@
 				local.get $at
 				f32x4.neg
 				local.get $Waxis	
-
+				f32.const 1.0
+				f32x4.replace_lane 3	
 			)
 		)
 	)

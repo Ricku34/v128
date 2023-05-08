@@ -43,6 +43,7 @@ WebAssembly & Javascript module fast matrix vector calculations using SIMD vecto
         * [.multiply(pMatA, pMatB, pMatDest)](#v128.matrix+multiply) ⇒ <code>UInt32</code>
         * [.tranform(pMat, pVec, pVecDest)](#v128.matrix+tranform) ⇒ <code>UInt32</code>
         * [.lookAt(pCamPos, pTargetPos, pMatDest)](#v128.matrix+lookAt) ⇒ <code>UInt32</code>
+        * [.invert(pMat, pMatDest)](#v128.matrix+invert) ⇒ <code>UInt32</code>
         * [.new(...vals)](#v128.matrix+new) ⇒ <code>UInt32</code>
         * [.free(pointer)](#v128.matrix+free)
         * [.perspective(fovy, aspect, near, far, pMatDest)](#v128.matrix+perspective) ⇒ <code>UInt32</code>
@@ -153,6 +154,7 @@ matrix API
     * [.multiply(pMatA, pMatB, pMatDest)](#v128.matrix+multiply) ⇒ <code>UInt32</code>
     * [.tranform(pMat, pVec, pVecDest)](#v128.matrix+tranform) ⇒ <code>UInt32</code>
     * [.lookAt(pCamPos, pTargetPos, pMatDest)](#v128.matrix+lookAt) ⇒ <code>UInt32</code>
+    * [.invert(pMat, pMatDest)](#v128.matrix+invert) ⇒ <code>UInt32</code>
     * [.new(...vals)](#v128.matrix+new) ⇒ <code>UInt32</code>
     * [.free(pointer)](#v128.matrix+free)
     * [.perspective(fovy, aspect, near, far, pMatDest)](#v128.matrix+perspective) ⇒ <code>UInt32</code>
@@ -198,6 +200,19 @@ fast create view matrix from camera position & target position (WebAssembly meth
 | pCamPos | <code>UInt32</code> | pointer to camera position |
 | pTargetPos | <code>UInt32</code> | pointer to target position |
 | pMatDest | <code>UInt32</code> | pointer to result view matrix |
+
+<a name="v128.matrix+invert"></a>
+
+#### matrix.invert(pMat, pMatDest) ⇒ <code>UInt32</code>
+fast invert matrix (WebAssembly method)
+
+**Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
+**Returns**: <code>UInt32</code> - the pointor to inversed matrix  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| pMat | <code>UInt32</code> | pointer to th matrix |
+| pMatDest | <code>UInt32</code> | pointer to inversed matrix |
 
 <a name="v128.matrix+new"></a>
 

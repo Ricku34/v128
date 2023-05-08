@@ -37,9 +37,13 @@ console.assert(v128.init);
 
 	var lookAtMat =  v128.matrix.lookAt(camPos,AT,v128.matrix.new());
 	var glLookAt = mat4.lookAt(mat4.create(),v128.memory.slice(camPos),v128.memory.slice(AT),v128.memory.slice(UP));
-	glLookAt[15]= 0; // not true homogeneous coordinates position (normaly we don't care in 3D space) 
 	console.assert(mat4.equals(glLookAt, v128.memory.slice(lookAtMat)))
+	
 
+	var invView = v128.matrix.invert(lookAtMat, v128.matrix.new());
+	var glInvView = mat4.invert(mat4.create(),glLookAt);
+	console.assert(mat4.equals(glInvView, v128.memory.slice(invView)))
+	
 
 	console.log("SUCCESS");
 

@@ -29,6 +29,14 @@ exports.matrix = function (v128Instance, v128) {
 		 */
 		lookAt : v128Instance.exports.lookAt,
 		/**
+		 * fast invert matrix (WebAssembly method)
+		 * @method v128.matrix#invert
+		 * @param {UInt32} pMat pointer to th matrix 
+		  * @param {UInt32} pMatDest pointer to inversed matrix
+		 * @returns {UInt32} the pointor to inversed matrix
+		 */
+		invert : v128Instance.exports.invert,
+		/**
 		 * fast create new matrix from initial values 
 		 * @method v128.matrix#new
 		 * @param  {...Numbers} vals number values to fill into matrix
