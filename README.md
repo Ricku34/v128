@@ -43,13 +43,18 @@ WebAssembly & Javascript module fast matrix vector calculations using SIMD vecto
         * [.slice(pointer)](#v128.memory+slice) ⇒ <code>Float32Array</code>
         * [.toArray(pointer)](#v128.memory+toArray) ⇒ <code>Float32Array</code>
     * [.matrix](#v128.matrix) : <code>object</code>
+        * [.new(...vals)](#v128.matrix+new) ⇒ <code>UInt32</code>
+        * [.free(pointer)](#v128.matrix+free)
+        * [.identity([pMatDest])](#v128.matrix+identity) ⇒
         * [.multiply(pMatA, pMatB, pMatDest)](#v128.matrix+multiply) ⇒ <code>UInt32</code>
         * [.tranform(pMat, pVec, pVecDest)](#v128.matrix+tranform) ⇒ <code>UInt32</code>
         * [.lookAt(pCamPos, pTargetPos, pMatDest)](#v128.matrix+lookAt) ⇒ <code>UInt32</code>
         * [.invert(pMat, pMatDest)](#v128.matrix+invert) ⇒ <code>UInt32</code>
-        * [.new(...vals)](#v128.matrix+new) ⇒ <code>UInt32</code>
-        * [.free(pointer)](#v128.matrix+free)
         * [.perspective(fovy, aspect, near, far, pMatDest)](#v128.matrix+perspective) ⇒ <code>UInt32</code>
+        * [.rotateX(pMat, angle, pMatDest)](#v128.matrix+rotateX) ⇒ <code>UInt32</code>
+        * [.rotateX(pMat, angle, pMatDest)](#v128.matrix+rotateX) ⇒ <code>UInt32</code>
+        * [.rotateX(pMat, angle, pMatDest)](#v128.matrix+rotateX) ⇒ <code>UInt32</code>
+        * [.rotateX(pMat, pVec, pMatDest)](#v128.matrix+rotateX) ⇒ <code>UInt32</code>
     * [.vector](#v128.vector) : <code>object</code>
         * [.new(...vals)](#v128.vector+new) ⇒ <code>UInt32</code>
         * [.free(pointer)](#v128.vector+free)
@@ -60,6 +65,8 @@ WebAssembly & Javascript module fast matrix vector calculations using SIMD vecto
         * [.mul(pVecA, pVecB, pVecDest)](#v128.vector+mul) ⇒ <code>UInt32</code>
         * [.div(pVecA, pVecB, pVecDest)](#v128.vector+div) ⇒ <code>UInt32</code>
         * [.cross(pVecA, pVecB, pVecDest)](#v128.vector+cross) ⇒ <code>UInt32</code>
+        * [.dot(pVecA, pVecB)](#v128.vector+dot) ⇒ <code>Number</code>
+        * [.scale(pVec, scale, pVecDest)](#v128.vector+scale) ⇒ <code>UInt32</code>
     * [.init(size)](#v128.init) ⇒ <code>Promise</code>
 
 <a name="v128.ready"></a>
@@ -154,68 +161,18 @@ matrix API
 **Kind**: static namespace of [<code>v128</code>](#v128)  
 
 * [.matrix](#v128.matrix) : <code>object</code>
+    * [.new(...vals)](#v128.matrix+new) ⇒ <code>UInt32</code>
+    * [.free(pointer)](#v128.matrix+free)
+    * [.identity([pMatDest])](#v128.matrix+identity) ⇒
     * [.multiply(pMatA, pMatB, pMatDest)](#v128.matrix+multiply) ⇒ <code>UInt32</code>
     * [.tranform(pMat, pVec, pVecDest)](#v128.matrix+tranform) ⇒ <code>UInt32</code>
     * [.lookAt(pCamPos, pTargetPos, pMatDest)](#v128.matrix+lookAt) ⇒ <code>UInt32</code>
     * [.invert(pMat, pMatDest)](#v128.matrix+invert) ⇒ <code>UInt32</code>
-    * [.new(...vals)](#v128.matrix+new) ⇒ <code>UInt32</code>
-    * [.free(pointer)](#v128.matrix+free)
     * [.perspective(fovy, aspect, near, far, pMatDest)](#v128.matrix+perspective) ⇒ <code>UInt32</code>
-
-<a name="v128.matrix+multiply"></a>
-
-#### matrix.multiply(pMatA, pMatB, pMatDest) ⇒ <code>UInt32</code>
-fast multiply 2 matrix (WebAssembly method)
-
-**Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
-**Returns**: <code>UInt32</code> - the pointor to result matrix A*B  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| pMatA | <code>UInt32</code> | pointer to matrix A |
-| pMatB | <code>UInt32</code> | pointer to matrix B |
-| pMatDest | <code>UInt32</code> | pointer to result matrix A*B |
-
-<a name="v128.matrix+tranform"></a>
-
-#### matrix.tranform(pMat, pVec, pVecDest) ⇒ <code>UInt32</code>
-fast multiply matrix * vector (WebAssembly method)
-
-**Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
-**Returns**: <code>UInt32</code> - the pointor to result transformed vector  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| pMat | <code>UInt32</code> | pointer to matrix |
-| pVec | <code>UInt32</code> | pointer to vector |
-| pVecDest | <code>UInt32</code> | pointer to result transformed vector (matrix * vector) |
-
-<a name="v128.matrix+lookAt"></a>
-
-#### matrix.lookAt(pCamPos, pTargetPos, pMatDest) ⇒ <code>UInt32</code>
-fast create view matrix from camera position & target position (WebAssembly method)
-
-**Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
-**Returns**: <code>UInt32</code> - the pointor to result view matrix  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| pCamPos | <code>UInt32</code> | pointer to camera position |
-| pTargetPos | <code>UInt32</code> | pointer to target position |
-| pMatDest | <code>UInt32</code> | pointer to result view matrix |
-
-<a name="v128.matrix+invert"></a>
-
-#### matrix.invert(pMat, pMatDest) ⇒ <code>UInt32</code>
-fast invert matrix (WebAssembly method)
-
-**Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
-**Returns**: <code>UInt32</code> - the pointor to inversed matrix  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| pMat | <code>UInt32</code> | pointer to th matrix |
-| pMatDest | <code>UInt32</code> | pointer to inversed matrix |
+    * [.rotateX(pMat, angle, pMatDest)](#v128.matrix+rotateX) ⇒ <code>UInt32</code>
+    * [.rotateX(pMat, angle, pMatDest)](#v128.matrix+rotateX) ⇒ <code>UInt32</code>
+    * [.rotateX(pMat, angle, pMatDest)](#v128.matrix+rotateX) ⇒ <code>UInt32</code>
+    * [.rotateX(pMat, pVec, pMatDest)](#v128.matrix+rotateX) ⇒ <code>UInt32</code>
 
 <a name="v128.matrix+new"></a>
 
@@ -240,6 +197,73 @@ free the matrix
 | --- | --- | --- |
 | pointer | <code>UInt32</code> | the pointor of matrix to free |
 
+<a name="v128.matrix+identity"></a>
+
+#### matrix.identity([pMatDest]) ⇒
+set or create matrix identity
+
+**Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
+**Returns**: the pointor of matrix identity  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [pMatDest] | <code>UInt32</code> | the pointor of matrix to set |
+
+<a name="v128.matrix+multiply"></a>
+
+#### matrix.multiply(pMatA, pMatB, pMatDest) ⇒ <code>UInt32</code>
+fast multiply 2 matrix (WebAssembly method)
+
+**Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
+**Returns**: <code>UInt32</code> - the pointor to result matrix A*B  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| pMatA | <code>UInt32</code> | pointer of matrix A |
+| pMatB | <code>UInt32</code> | pointer of matrix B |
+| pMatDest | <code>UInt32</code> | pointer of result matrix A*B |
+
+<a name="v128.matrix+tranform"></a>
+
+#### matrix.tranform(pMat, pVec, pVecDest) ⇒ <code>UInt32</code>
+fast multiply matrix * vector (WebAssembly method)
+
+**Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
+**Returns**: <code>UInt32</code> - the pointor to result transformed vector  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| pMat | <code>UInt32</code> | pointer of matrix |
+| pVec | <code>UInt32</code> | pointer of vector |
+| pVecDest | <code>UInt32</code> | pointer of result transformed vector (matrix * vector) |
+
+<a name="v128.matrix+lookAt"></a>
+
+#### matrix.lookAt(pCamPos, pTargetPos, pMatDest) ⇒ <code>UInt32</code>
+fast create view matrix from camera position & target position (WebAssembly method)
+
+**Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
+**Returns**: <code>UInt32</code> - the pointor to result view matrix  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| pCamPos | <code>UInt32</code> | pointer of camera position |
+| pTargetPos | <code>UInt32</code> | pointer of target position |
+| pMatDest | <code>UInt32</code> | pointer of result view matrix |
+
+<a name="v128.matrix+invert"></a>
+
+#### matrix.invert(pMat, pMatDest) ⇒ <code>UInt32</code>
+fast invert matrix (WebAssembly method)
+
+**Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
+**Returns**: <code>UInt32</code> - the pointor to inversed matrix  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| pMat | <code>UInt32</code> | pointer of th matrix |
+| pMatDest | <code>UInt32</code> | pointer of inversed matrix |
+
 <a name="v128.matrix+perspective"></a>
 
 #### matrix.perspective(fovy, aspect, near, far, pMatDest) ⇒ <code>UInt32</code>
@@ -254,7 +278,63 @@ create projection matrix from perspective data
 | aspect | <code>number</code> | Aspect ratio. typically viewport width/height |
 | near | <code>number</code> | Near clipping bound of the frustum |
 | far | <code>number</code> | Far clipping bound of the frustum |
-| pMatDest | <code>UInt32</code> | pointer to result projection matrix |
+| pMatDest | <code>UInt32</code> | pointer of result projection matrix |
+
+<a name="v128.matrix+rotateX"></a>
+
+#### matrix.rotateX(pMat, angle, pMatDest) ⇒ <code>UInt32</code>
+Rotates a matrix by the given angle around the X axis
+
+**Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
+**Returns**: <code>UInt32</code> - the pointor of the receiving matrix  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| pMat | <code>UInt32</code> | pointer of matrix to rotate |
+| angle | <code>Number</code> | the angle in radian to rotate the matrix by |
+| pMatDest | <code>UInt32</code> | pointer of the receiving matrix |
+
+<a name="v128.matrix+rotateX"></a>
+
+#### matrix.rotateX(pMat, angle, pMatDest) ⇒ <code>UInt32</code>
+Rotates a matrix by the given angle around the Y axis
+
+**Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
+**Returns**: <code>UInt32</code> - the pointor of the receiving matrix  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| pMat | <code>UInt32</code> | pointer of matrix to rotate |
+| angle | <code>Number</code> | the angle in radian to rotate the matrix by |
+| pMatDest | <code>UInt32</code> | pointer of the receiving matrix |
+
+<a name="v128.matrix+rotateX"></a>
+
+#### matrix.rotateX(pMat, angle, pMatDest) ⇒ <code>UInt32</code>
+Rotates a matrix by the given angle around the Z axis
+
+**Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
+**Returns**: <code>UInt32</code> - the pointor of the receiving matrix  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| pMat | <code>UInt32</code> | pointer of matrix to rotate |
+| angle | <code>Number</code> | the angle in radian to rotate the matrix by |
+| pMatDest | <code>UInt32</code> | pointer of the receiving matrix |
+
+<a name="v128.matrix+rotateX"></a>
+
+#### matrix.rotateX(pMat, pVec, pMatDest) ⇒ <code>UInt32</code>
+Translates a matrix by the given vector
+
+**Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
+**Returns**: <code>UInt32</code> - the pointor of the receiving matrix  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| pMat | <code>UInt32</code> | pointer of matrix to translate |
+| pVec | <code>Number</code> | pointer of vector to translate by |
+| pMatDest | <code>UInt32</code> | pointer of the receiving matrix |
 
 <a name="v128.vector"></a>
 
@@ -273,6 +353,8 @@ vector API
     * [.mul(pVecA, pVecB, pVecDest)](#v128.vector+mul) ⇒ <code>UInt32</code>
     * [.div(pVecA, pVecB, pVecDest)](#v128.vector+div) ⇒ <code>UInt32</code>
     * [.cross(pVecA, pVecB, pVecDest)](#v128.vector+cross) ⇒ <code>UInt32</code>
+    * [.dot(pVecA, pVecB)](#v128.vector+dot) ⇒ <code>Number</code>
+    * [.scale(pVec, scale, pVecDest)](#v128.vector+scale) ⇒ <code>UInt32</code>
 
 <a name="v128.vector+new"></a>
 
@@ -307,7 +389,7 @@ get fast length of 3D Homogeneous coordinates vector (WebAssembly method)
 
 | Param | Type | Description |
 | --- | --- | --- |
-| pVec | <code>UInt32</code> | pointer to vector |
+| pVec | <code>UInt32</code> | pointer of vector |
 
 <a name="v128.vector+normalize"></a>
 
@@ -315,12 +397,12 @@ get fast length of 3D Homogeneous coordinates vector (WebAssembly method)
 fast normalize 3D Homogeneous coordinates vector (WebAssembly method)
 
 **Kind**: instance method of [<code>vector</code>](#v128.vector)  
-**Returns**: <code>UInt32</code> - the pointer to normalized vector  
+**Returns**: <code>UInt32</code> - the pointer of normalized vector  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| pVec | <code>UInt32</code> | pointer to vector |
-| pVecDest | <code>UInt32</code> | pointer to receive normalized vector |
+| pVec | <code>UInt32</code> | pointer of vector |
+| pVecDest | <code>UInt32</code> | pointer of receive normalized vector |
 
 <a name="v128.vector+add"></a>
 
@@ -328,13 +410,13 @@ fast normalize 3D Homogeneous coordinates vector (WebAssembly method)
 fast add two 3D Homogeneous coordinates vector (WebAssembly method)
 
 **Kind**: instance method of [<code>vector</code>](#v128.vector)  
-**Returns**: <code>UInt32</code> - the pointer to result vector  
+**Returns**: <code>UInt32</code> - the pointer of result vector  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| pVecA | <code>UInt32</code> | pointer to vector A |
-| pVecB | <code>UInt32</code> | pointer to vector B |
-| pVecDest | <code>UInt32</code> | pointer to receive sum result vector ( A + B ) |
+| pVecA | <code>UInt32</code> | pointer of vector A |
+| pVecB | <code>UInt32</code> | pointer of vector B |
+| pVecDest | <code>UInt32</code> | pointer of receive sum result vector ( A + B ) |
 
 <a name="v128.vector+sub"></a>
 
@@ -342,13 +424,13 @@ fast add two 3D Homogeneous coordinates vector (WebAssembly method)
 fast sub two 3D Homogeneous coordinates vector (WebAssembly method)
 
 **Kind**: instance method of [<code>vector</code>](#v128.vector)  
-**Returns**: <code>UInt32</code> - the pointer to result vector  
+**Returns**: <code>UInt32</code> - the pointer of result vector  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| pVecA | <code>UInt32</code> | pointer to vector A |
-| pVecB | <code>UInt32</code> | pointer to vector B |
-| pVecDest | <code>UInt32</code> | pointer to receive sum result vector ( A - B ) |
+| pVecA | <code>UInt32</code> | pointer of vector A |
+| pVecB | <code>UInt32</code> | pointer of vector B |
+| pVecDest | <code>UInt32</code> | pointer of receive sum result vector ( A - B ) |
 
 <a name="v128.vector+mul"></a>
 
@@ -356,13 +438,13 @@ fast sub two 3D Homogeneous coordinates vector (WebAssembly method)
 fast multiply two 3D Homogeneous coordinates vector (WebAssembly method)
 
 **Kind**: instance method of [<code>vector</code>](#v128.vector)  
-**Returns**: <code>UInt32</code> - the pointer to result vector  
+**Returns**: <code>UInt32</code> - the pointer of result vector  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| pVecA | <code>UInt32</code> | pointer to vector A |
-| pVecB | <code>UInt32</code> | pointer to vector B |
-| pVecDest | <code>UInt32</code> | pointer to receive multiply result vector ( A * B ) |
+| pVecA | <code>UInt32</code> | pointer of vector A |
+| pVecB | <code>UInt32</code> | pointer of vector B |
+| pVecDest | <code>UInt32</code> | pointer of receive multiply result vector ( A * B ) |
 
 <a name="v128.vector+div"></a>
 
@@ -370,13 +452,13 @@ fast multiply two 3D Homogeneous coordinates vector (WebAssembly method)
 fast divide two 3D Homogeneous coordinates vector (WebAssembly method)
 
 **Kind**: instance method of [<code>vector</code>](#v128.vector)  
-**Returns**: <code>UInt32</code> - the pointer to result vector  
+**Returns**: <code>UInt32</code> - the pointer of result vector  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| pVecA | <code>UInt32</code> | pointer to vector A |
-| pVecB | <code>UInt32</code> | pointer to vector B |
-| pVecDest | <code>UInt32</code> | pointer to receive divide result vector ( A / B ) |
+| pVecA | <code>UInt32</code> | pointer of vector A |
+| pVecB | <code>UInt32</code> | pointer of vector B |
+| pVecDest | <code>UInt32</code> | pointer of receive divide result vector ( A / B ) |
 
 <a name="v128.vector+cross"></a>
 
@@ -384,13 +466,40 @@ fast divide two 3D Homogeneous coordinates vector (WebAssembly method)
 fast cross product of two 3D Homogeneous coordinates vector (WebAssembly method)
 
 **Kind**: instance method of [<code>vector</code>](#v128.vector)  
-**Returns**: <code>UInt32</code> - the pointer to result vector  
+**Returns**: <code>UInt32</code> - the pointer of result vector  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| pVecA | <code>UInt32</code> | pointer to vector A |
-| pVecB | <code>UInt32</code> | pointer to vector B |
-| pVecDest | <code>UInt32</code> | pointer to receive cross product result vector ( A.B ) |
+| pVecA | <code>UInt32</code> | pointer of vector A |
+| pVecB | <code>UInt32</code> | pointer of vector B |
+| pVecDest | <code>UInt32</code> | pointer of receive cross product result vector ( A.B ) |
+
+<a name="v128.vector+dot"></a>
+
+#### vector.dot(pVecA, pVecB) ⇒ <code>Number</code>
+fast dot product of two 3D Homogeneous coordinates vector (WebAssembly method)
+
+**Kind**: instance method of [<code>vector</code>](#v128.vector)  
+**Returns**: <code>Number</code> - the pointer of result vector  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| pVecA | <code>UInt32</code> | pointer of vector A |
+| pVecB | <code>UInt32</code> | pointer of vector B |
+
+<a name="v128.vector+scale"></a>
+
+#### vector.scale(pVec, scale, pVecDest) ⇒ <code>UInt32</code>
+fast scale vector by a scalar number
+
+**Kind**: instance method of [<code>vector</code>](#v128.vector)  
+**Returns**: <code>UInt32</code> - the pointer of result vector  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| pVec | <code>UInt32</code> | pointer of vector to scale |
+| scale | <code>Number</code> | amount to scale the vector by |
+| pVecDest | <code>UInt32</code> | pointer of receive result vector |
 
 <a name="v128.init"></a>
 

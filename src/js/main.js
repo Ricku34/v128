@@ -29,7 +29,7 @@ v128.ready = new Promise((resolve) => {
 			return v128.ready;
 		}
 		patchPageSize(wasmdata,size);
-		var module = await WebAssembly.instantiate(wasmdata.buffer);
+		var module = await WebAssembly.instantiate(wasmdata.buffer,{Math});
 		/**
 		 * memory API 
 		 * @namespace v128.memory

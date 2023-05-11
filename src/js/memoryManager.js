@@ -9,8 +9,8 @@ exports.patchPageSize = function (byteCode, size) {
 		}
 		p+=1;
 	}
-	if(found && p-5>0) {
-		byteCode[p-5]=size;
+	if(found && p-6>0) {
+		byteCode[p-6]=size;
 	}
 }
 

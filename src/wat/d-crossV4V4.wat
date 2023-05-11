@@ -76,3 +76,25 @@
 		v128.store
 		local.get 2
 	)
+	(func (export "dotV3V3") (param i32 i32) (result f32)
+
+		local.get 0
+		v128.load ;; vector A 
+		
+		local.get 1
+		v128.load ;; vector B
+
+		call $dotV3V3
+		
+	)
+	(func (export "scaleV3") (param i32 f32 i32) (result i32)
+
+		local.get 2
+			local.get 0
+			v128.load ;; vector 
+			
+			local.get 1
+			call $scaleV3
+		v128.store
+		local.get 2
+	)
