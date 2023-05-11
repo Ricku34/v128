@@ -111,7 +111,7 @@ exports.matrix = function (v128Instance, v128) {
 		rotateX : v128Instance.exports.rotateX,
 		/**
 		 * Rotates a matrix by the given angle around the Y axis
-		 * @method v128.matrix#rotateX
+		 * @method v128.matrix#rotateY
 		 * @param {UInt32} pMat pointer of matrix to rotate
 		 * @param {Number} angle the angle in radian to rotate the matrix by
 		 * @param {UInt32} pMatDest pointer of the receiving matrix
@@ -120,7 +120,7 @@ exports.matrix = function (v128Instance, v128) {
 		rotateY : v128Instance.exports.rotateY,
 		/**
 		 * Rotates a matrix by the given angle around the Z axis
-		 * @method v128.matrix#rotateX
+		 * @method v128.matrix#rotateZ
 		 * @param {UInt32} pMat pointer of matrix to rotate
 		 * @param {Number} angle the angle in radian to rotate the matrix by
 		 * @param {UInt32} pMatDest pointer of the receiving matrix

@@ -52,8 +52,8 @@ WebAssembly & Javascript module fast matrix vector calculations using SIMD vecto
         * [.invert(pMat, pMatDest)](#v128.matrix+invert) ⇒ <code>UInt32</code>
         * [.perspective(fovy, aspect, near, far, pMatDest)](#v128.matrix+perspective) ⇒ <code>UInt32</code>
         * [.rotateX(pMat, angle, pMatDest)](#v128.matrix+rotateX) ⇒ <code>UInt32</code>
-        * [.rotateX(pMat, angle, pMatDest)](#v128.matrix+rotateX) ⇒ <code>UInt32</code>
-        * [.rotateX(pMat, angle, pMatDest)](#v128.matrix+rotateX) ⇒ <code>UInt32</code>
+        * [.rotateY(pMat, angle, pMatDest)](#v128.matrix+rotateY) ⇒ <code>UInt32</code>
+        * [.rotateZ(pMat, angle, pMatDest)](#v128.matrix+rotateZ) ⇒ <code>UInt32</code>
         * [.rotateX(pMat, pVec, pMatDest)](#v128.matrix+rotateX) ⇒ <code>UInt32</code>
     * [.vector](#v128.vector) : <code>object</code>
         * [.new(...vals)](#v128.vector+new) ⇒ <code>UInt32</code>
@@ -170,8 +170,8 @@ matrix API
     * [.invert(pMat, pMatDest)](#v128.matrix+invert) ⇒ <code>UInt32</code>
     * [.perspective(fovy, aspect, near, far, pMatDest)](#v128.matrix+perspective) ⇒ <code>UInt32</code>
     * [.rotateX(pMat, angle, pMatDest)](#v128.matrix+rotateX) ⇒ <code>UInt32</code>
-    * [.rotateX(pMat, angle, pMatDest)](#v128.matrix+rotateX) ⇒ <code>UInt32</code>
-    * [.rotateX(pMat, angle, pMatDest)](#v128.matrix+rotateX) ⇒ <code>UInt32</code>
+    * [.rotateY(pMat, angle, pMatDest)](#v128.matrix+rotateY) ⇒ <code>UInt32</code>
+    * [.rotateZ(pMat, angle, pMatDest)](#v128.matrix+rotateZ) ⇒ <code>UInt32</code>
     * [.rotateX(pMat, pVec, pMatDest)](#v128.matrix+rotateX) ⇒ <code>UInt32</code>
 
 <a name="v128.matrix+new"></a>
@@ -294,9 +294,9 @@ Rotates a matrix by the given angle around the X axis
 | angle | <code>Number</code> | the angle in radian to rotate the matrix by |
 | pMatDest | <code>UInt32</code> | pointer of the receiving matrix |
 
-<a name="v128.matrix+rotateX"></a>
+<a name="v128.matrix+rotateY"></a>
 
-#### matrix.rotateX(pMat, angle, pMatDest) ⇒ <code>UInt32</code>
+#### matrix.rotateY(pMat, angle, pMatDest) ⇒ <code>UInt32</code>
 Rotates a matrix by the given angle around the Y axis
 
 **Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
@@ -308,9 +308,9 @@ Rotates a matrix by the given angle around the Y axis
 | angle | <code>Number</code> | the angle in radian to rotate the matrix by |
 | pMatDest | <code>UInt32</code> | pointer of the receiving matrix |
 
-<a name="v128.matrix+rotateX"></a>
+<a name="v128.matrix+rotateZ"></a>
 
-#### matrix.rotateX(pMat, angle, pMatDest) ⇒ <code>UInt32</code>
+#### matrix.rotateZ(pMat, angle, pMatDest) ⇒ <code>UInt32</code>
 Rotates a matrix by the given angle around the Z axis
 
 **Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
