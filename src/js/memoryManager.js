@@ -101,9 +101,9 @@ exports.memoryManager = function (v128Instance) {
 	 * @returns {Float32Array} 
 	 * 
 	 */
-	manager.toArray = function(pointer) {
+	manager.toArray = function(pointer,size) {
 		var idx = pointer/4;
-		var size = allocated[idx];
+		size = size || allocated[idx];
 		return floatBuffer.subarray(idx,idx+size);
 	}
 
