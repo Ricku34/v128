@@ -79,10 +79,10 @@
 		f32x4.add
 
 
-		local.get $a0
+		local.get $a1
 		local.get $c
 		f32x4.mul
-		local.get $a1
+		local.get $a0
 		local.get $s
 		f32x4.mul
 		f32x4.sub
