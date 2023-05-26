@@ -8,7 +8,7 @@ exports.matrix = function (v128Instance, v128) {
 		 */
 		new : function(...vals) { 
 			var p = v128.memory.alloc(16);
-			if(p && vals.length) {
+			if(p!==null && vals.length) {
 				v128.memory.fill(p, ...vals);
 			}
 			return p;
@@ -100,6 +100,151 @@ exports.matrix = function (v128Instance, v128) {
 				0);
 			return pMatDest;
 		},
+		/**
+		 * Creates a matrix from a vector translation
+		 * @param {UInt32} pVec pointer of Translation vector
+		 * @param {UInt32} pMatDest pointer of result translated matrix
+		 * @returns {UInt32} the pointor to result translated matrix
+		 */
+		fromTranslation : function(pVec, pMatDest) {
+			var v = v128.memory.toArray(pVec);
+			v128.memory.fill(pMatDest,
+				 1,
+				 0,
+				 0,
+				 0,
+				 0,
+				 1,
+				 0,
+				 0,
+				 0,
+				 0,
+				 1,
+				 0,
+				 v[0],
+				 v[1],
+				 v[2],
+				 1);
+			return pMatDest;
+		},
+
+		/**
+		 * Creates a matrix from a vector scaling
+		 * @param {UInt32} pVec pointer of scaling vector
+		 * @param {UInt32} pMatDest pointer of result scaled matrix
+		 * @returns {UInt32} the pointor to result scaled matrix
+		 */
+		fromScaling : function(pVec, pMatDest) {
+			var v = v128.memory.toArray(pVec);
+			v128.memory.fill(pMatDest,
+				 v[0],
+				 0,
+				 0,
+				 0,
+				 0,
+				 v[1],
+				 0,
+				 0,
+				 0,
+				 0,
+				 v[2],
+				 0,
+				 0,
+				 0,
+				 0,
+				 1);
+			return pMatDest;
+		},
+		/**
+		 * Creates a matrix from the given angle around the X axis
+		 * @param {Number} rad the angle to rotate the matrix by
+		 * @param {UInt32} pMatDest pointer of result rotated matrix
+		 * @returns {UInt32} the pointor to result rotated matrix
+		 */
+		fromXRotation : function(rad, pMatDest) {
+			var s = Math.sin(rad),
+				c = Math.cos(rad);
+
+			v128.memory.fill(pMatDest,
+				 1,
+				 0,
+				 0,
+				 0,
+				 0,
+				 c,
+				 s,
+				 0,
+				 0,
+				 -s,
+				 c,
+				 0,
+				 0,
+				 0,
+				 0,
+				 1);
+			return pMatDest;
+		},
+
+		/**
+		 * Creates a matrix from the given angle around the Y axis
+		 * @param {Number} rad the angle to rotate the matrix by
+		 * @param {UInt32} pMatDest pointer of result rotated matrix
+		 * @returns {UInt32} the pointor to result rotated matrix
+		 */
+		fromYRotation : function(rad, pMatDest) {
+			var s = Math.sin(rad),
+				c = Math.cos(rad);
+
+			v128.memory.fill(pMatDest,
+				 c,
+				 0,
+				 -s,
+				 0,
+				 0,
+				 1,
+				 0,
+				 0,
+				 s,
+				 0,
+				 c,
+				 0,
+				 0,
+				 0,
+				 0,
+				 1);
+			return pMatDest;
+		},
+
+		/**
+		 * Creates a matrix from the given angle around the Z axis
+		 * @param {Number} rad the angle to rotate the matrix by
+		 * @param {UInt32} pMatDest pointer of result rotated matrix
+		 * @returns {UInt32} the pointor to result rotated matrix
+		 */
+		fromZRotation : function(rad, pMatDest) {
+			var s = Math.sin(rad),
+				c = Math.cos(rad);
+
+			v128.memory.fill(pMatDest,
+				 c,
+				 s,
+				 0,
+				 0,
+				 -s,
+				 c,
+				 0,
+				 0,
+				 0,
+				 0,
+				 1,
+				 0,
+				 0,
+				 0,
+				 0,
+				 1);
+			return pMatDest;
+		},
+
 		/**
 		 * Rotates a matrix by the given angle around the X axis
 		 * @method v128.matrix#rotateX
