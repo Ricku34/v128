@@ -32,6 +32,7 @@
 				local.get $Yaxis
 				local.get $at
 				v128.const f32x4 0.0 0.0 0.0 0.0
+				call $transposeM4	
 				local.get $pos
 				(local.set $Waxis (call $mulM4V4))
 				local.get $right
@@ -40,9 +41,12 @@
 				f32x4.neg
 				local.get $at
 				f32x4.neg
+				v128.const f32x4 0.0 0.0 0.0 0.0
+				call $transposeM4
+				drop
 				local.get $Waxis	
 				f32.const 1.0
-				f32x4.replace_lane 3	
+				f32x4.replace_lane 3
 			)
 		)
 	)
