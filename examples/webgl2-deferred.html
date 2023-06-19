@@ -1,33 +1,18 @@
 <!DOCTYPE html>
-<!--
-  The MIT License (MIT)
-
-  Copyright (c) 2017 Tarek Sherif
-
-  Permission is hereby granted, free of charge, to any person obtaining a copy of
-  this software and associated documentation files (the "Software"), to deal in
-  the Software without restriction, including without limitation the rights to
-  use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-  the Software, and to permit persons to whom the Software is furnished to do so,
-  subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be included in all
-  copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-  FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-  COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
--->
 <html>
 <head>
 	<title>WebGL 2 Example: Deferred Rendering</title>
 	<meta charset="utf-8">
 	<script src="../dist/v128.js"></script>
 	<script src="../src/scripts/utils.js"></script>
-	<!-- <link rel="stylesheet" href="css/webgl2examples.css">  -->
+	<style >
+		* {
+			border: 0;
+			padding: 0;
+			margin: 0;
+			overflow: hidden;
+		}
+	</style>
 </head>
 <body>
 	<canvas id="gl-canvas"></canvas>
@@ -362,61 +347,58 @@
 			{
 				scale: v128.vector.new(1, 1, 1),
 				rotate: v128.vector.new(0, 0, 0),
-				translate: v128.vector.new(0, 0, 0),
-				modelMatrix: v128.matrix.new(),
-				mvpMatrix: v128.matrix.new(),
+				translate: v128.vector.new(0, 0, 0)
 			},
 			{
 				scale: v128.vector.new(0.1, 0.1, 0.1),
 				rotate: v128.vector.new(0, 0, Math.PI / 3),
-				translate: v128.vector.new(0.8, 0.8, 0.4),
-				modelMatrix: v128.matrix.new(),
-				mvpMatrix: v128.matrix.new(),
+				translate: v128.vector.new(0.8, 0.8, 0.4)
 			}
 		];
 
-		var matrixUniformData = new Float32Array(32);
+		var matrixUniformData = v128.uniformBlock.create(v128.uniformBlock.getInfo(gl, geoProgram, "Matrices"));
 		var matrixUniformBuffer = gl.createBuffer();
 		gl.bindBufferBase(gl.UNIFORM_BUFFER, 0, matrixUniformBuffer);
 		gl.bufferData(gl.UNIFORM_BUFFER, 128, gl.DYNAMIC_DRAW);
-
+		var LightUniformsInfo = v128.uniformBlock.getInfo(gl, mainProgram, "LightUniforms");
 		var lights = [
 			{
-				position: v128.vector.new(0, 1, 0.5),
-				color:    v128.vector.new(0.8, 0.0, 0.0),
-				uniformData: new Float32Array(24),
+				uniformData:  v128.uniformBlock.create(LightUniformsInfo, {
+					position: [0, 1, 0.5],
+					color:    [0.8, 0.0, 0.0]
+				}),
 				uniformBuffer: gl.createBuffer()
 			},
 			{
-				position: v128.vector.new(1, 1, 0.5),
-				color:    v128.vector.new(0.0, 0.0, 0.8),
-				uniformData: new Float32Array(24),
+				uniformData:  v128.uniformBlock.create(LightUniformsInfo, {
+					position: [1, 1, 0.5],
+					color:    [0.0, 0.0, 0.8]
+				}),
 				uniformBuffer: gl.createBuffer()
 			},
 			{
-				position: v128.vector.new(1, 0, 0.5),
-				color:    v128.vector.new(0.0, 0.8, 0.0),
-				uniformData: new Float32Array(24),
+				uniformData:  v128.uniformBlock.create(LightUniformsInfo, {
+					position: [1, 0, 0.5],
+					color:    [0.0, 0.8, 0.0]
+				}),
 				uniformBuffer: gl.createBuffer()
 			},
 			{
-				position: v128.vector.new(0.5, 0, 1),
-				color:    v128.vector.new(0.0, 0.8, 0.8),
-				uniformData: new Float32Array(24),
+				uniformData:  v128.uniformBlock.create(LightUniformsInfo, {
+					position: [0.5, 0, 1],
+					color:    [0.0, 0.8, 0.8]
+				}),
 				uniformBuffer: gl.createBuffer()
 			}
 		];
 		
-		var mvpMatrix = v128.matrix.new();
 		for (var i = 0, len = lights.length; i < len; ++i) {
-			utils.xformMatrix(mvpMatrix, lights[i].position);
-			v128.matrix.multiply(viewProjMatrix, mvpMatrix, mvpMatrix,);
-			lights[i].uniformData.set(v128.memory.toArray(mvpMatrix));
-			lights[i].uniformData.set(v128.memory.toArray(lights[i].position,3), 16);
-			lights[i].uniformData.set(v128.memory.toArray(lights[i].color,3), 20);
+			utils.xformMatrix(lights[i].uniformData.pointors.mvp, lights[i].uniformData.pointors.position);
+			v128.matrix.multiply(viewProjMatrix, lights[i].uniformData.pointors.mvp, lights[i].uniformData.pointors.mvp);
+			
 
 			gl.bindBufferBase(gl.UNIFORM_BUFFER, 0, lights[i].uniformBuffer);        
-			gl.bufferData(gl.UNIFORM_BUFFER, lights[i].uniformData, gl.STATIC_DRAW);
+			gl.bufferData(gl.UNIFORM_BUFFER, lights[i].uniformData.buffer, gl.STATIC_DRAW);
 		}
 
 		var image = new Image();
@@ -481,14 +463,11 @@
 					r[0] += 0.01;
 					r[1] += 0.02;
 
-					utils.xformMatrix(boxes[i].modelMatrix, boxes[i].translate, boxes[i].rotate, boxes[i].scale);
-					v128.matrix.multiply(viewProjMatrix, boxes[i].modelMatrix, boxes[i].mvpMatrix);
+					utils.xformMatrix(matrixUniformData.pointors.uModelMatrix, boxes[i].translate, boxes[i].rotate, boxes[i].scale);
+					v128.matrix.multiply(viewProjMatrix, matrixUniformData.pointors.uModelMatrix, matrixUniformData.pointors.uMVP);
 				
-					matrixUniformData.set(v128.memory.toArray(boxes[i].modelMatrix));
-					matrixUniformData.set(v128.memory.toArray(boxes[i].mvpMatrix), 16);
-
 					gl.bindBufferBase(gl.UNIFORM_BUFFER, 0, matrixUniformBuffer);
-					gl.bufferSubData(gl.UNIFORM_BUFFER, 0, matrixUniformData);
+					gl.bufferSubData(gl.UNIFORM_BUFFER, 0, matrixUniformData.buffer);
 
 					gl.drawArrays(gl.TRIANGLES, 0, numCubeVertices);
 				}

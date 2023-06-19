@@ -3,7 +3,8 @@ const wasmdata = require("../../build/wasm-data.js");
 const {memoryManager , patchPageSize} = require("./memoryManager.js");
 const {matrix} = require("./matrix.js");
 const {vector} = require("./vector.js");
-/**
+const {uniformBlock} = require("./uniformBlock.js");
+ /**
  * WebAssembly & Javascript module fast matrix vector calculations using SIMD vector 128 bits.
  * @namespace v128
  */
@@ -45,6 +46,11 @@ v128.ready = new Promise((resolve) => {
 		 * @namespace v128.vector
 		 */
 		v128.vector = vector(module.instance,v128);
+		/**
+		 * WebGL2 Uniform Buffer Objects API (UBOs) 
+		 * @namespace v128.uniformBlock
+		 */
+		v128.uniformBlock = uniformBlock(module.instance,v128);	
 		isReady=size;
 		resolve();
 		return v128.ready;

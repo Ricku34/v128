@@ -39,7 +39,7 @@ exports.memoryManager = function (v128Instance) {
 	 * @returns {UInt32} the pointor from v128 memory
 	 */
 	manager.alloc = function(size) {
-		if(released[size]) {
+		if(released[size] && released[size].length) {
 			var idx = released[size].pop();
 			allocated[idx]=size;
 			return idx * 4;

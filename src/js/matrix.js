@@ -107,7 +107,7 @@ exports.matrix = function (v128Instance, v128) {
 		 * @returns {UInt32} the pointor to result translated matrix
 		 */
 		fromTranslation : function(pVec, pMatDest) {
-			var v = v128.memory.toArray(pVec);
+			var v = v128.memory.toArray(pVec,3);
 			v128.memory.fill(pMatDest,
 				 1,
 				 0,
@@ -135,7 +135,7 @@ exports.matrix = function (v128Instance, v128) {
 		 * @returns {UInt32} the pointor to result scaled matrix
 		 */
 		fromScaling : function(pVec, pMatDest) {
-			var v = v128.memory.toArray(pVec);
+			var v = v128.memory.toArray(pVec,3);
 			v128.memory.fill(pMatDest,
 				 v[0],
 				 0,

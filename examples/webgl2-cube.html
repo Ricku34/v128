@@ -1,26 +1,4 @@
 <!DOCTYPE html>
-<!--
-  The MIT License (MIT)
-
-  Copyright (c) 2017 Tarek Sherif
-
-  Permission is hereby granted, free of charge, to any person obtaining a copy of
-  this software and associated documentation files (the "Software"), to deal in
-  the Software without restriction, including without limitation the rights to
-  use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-  the Software, and to permit persons to whom the Software is furnished to do so,
-  subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be included in all
-  copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-  FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-  COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
--->
 <html>
 <head>
 	<title>WebGL 2 Example: Phong-shaded Cube</title>
@@ -28,7 +6,14 @@
 	<script src="../dist/v128.js"></script>
 	<script src="../src/scripts/utils.js"></script>
 	<script src="../node_modules/gl-matrix/gl-matrix-min.js"></script>
-	<!-- <link rel="stylesheet" href="css/webgl2examples.css">  -->
+	<style >
+		* {
+			border: 0;
+			padding: 0;
+			margin: 0;
+			overflow: hidden;
+		}
+	</style>
 </head>
 <body>
 	<canvas id="gl-canvas"></canvas>
@@ -186,26 +171,25 @@
 		// UNIFORM DATA
 		//////////////////////////
 
+		var sceneUniformData = v128.uniformBlock.create(v128.uniformBlock.getInfo(gl, program, "SceneUniforms"), {
+			eyePosition   : [1, 1, 1],
+			lightPosition : [1, 1, 0.5]
+		});
+		
 
 		var projMatrix = v128.matrix.perspective(Math.PI / 2, gl.drawingBufferWidth / gl.drawingBufferHeight, 0.1, 10.0,v128.matrix.new());
-
-		var viewMatrix = v128.matrix.lookAt(utils.ONES, utils.ZEROS,v128.matrix.new());
-
-		var viewProjMatrix = v128.matrix.multiply(projMatrix, viewMatrix, v128.matrix.new());
-
+		var viewMatrix = v128.matrix.lookAt(sceneUniformData.pointors.eyePosition, utils.ZEROS,v128.matrix.new());
+		v128.matrix.multiply(projMatrix, viewMatrix, sceneUniformData.pointors.viewProj);
+		v128.memory.free(viewMatrix);
+		v128.memory.free(projMatrix);
 		var modelMatrix = v128.matrix.new();
 		var rotateXMatrix = v128.matrix.new();
 		var rotateYMatrix = v128.matrix.new();
 
-		var sceneUniformData = new Float32Array(24);
-		sceneUniformData.set(v128.memory.toArray(viewProjMatrix));
-		sceneUniformData.set([1, 1, 1], 16);
-		sceneUniformData.set([1, 1, 0.5,], 20);
-
 
 		var sceneUniformBuffer = gl.createBuffer();
 		gl.bindBufferBase(gl.UNIFORM_BUFFER, 0, sceneUniformBuffer);
-		gl.bufferData(gl.UNIFORM_BUFFER, sceneUniformData, gl.STATIC_DRAW);
+		gl.bufferData(gl.UNIFORM_BUFFER, sceneUniformData.buffer, gl.STATIC_DRAW);
 
 		var angleX = 0;
 		var angleY = 0;
