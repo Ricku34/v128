@@ -1,3 +1,7 @@
+/*
+	Original code from Webgl 2 examples (https://github.com/tsherif/webgl2examples) of Tarek Sherif.
+	replace gl-matrix module by v128 module
+*/
 (async function() {
 
 	window.utils = {
