@@ -19,7 +19,7 @@ exports.memoryManager = function (v128Instance) {
 	const manager = {};
 	const floatBuffer = new Float32Array(v128Instance.exports.memory.buffer);
 	let heap = 0;
-	const allocated = new Uint8Array(floatBuffer.length);
+	const allocated = {}; // new Uint8Array(floatBuffer.length);
 	const released = {};
 
 	/**

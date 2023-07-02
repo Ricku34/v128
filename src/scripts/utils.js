@@ -223,7 +223,7 @@
 				var num_positions = long_bands * lat_bands * 4;
 				var num_indices = long_bands * lat_bands * 6;
 				var lat_angle, long_angle;
-				var positions = new Float32Array(num_positions * 3);
+				var positions = v128.vertexBuffer.create(num_positions,{ position : v128.TYPES.FLOAT_VEC3 }); //new Float32Array(num_positions * 3);
 				var normals = new Float32Array(num_positions * 3);
 				var uvs = new Float32Array(num_positions * 2);
 				var indices = new Uint16Array(num_indices);
@@ -257,22 +257,23 @@
 						vi = k * 3;
 						ti = k * 2;
 
-						positions[vi] = x1 * radius; 
-						positions[vi+1] = y1 * radius; 
-						positions[vi+2] = z1 * radius; //v0
+						positions.buffer[vi] = x1 * radius; 
+						positions.buffer[vi+1] = y1 * radius; 
+						positions.buffer[vi+2] = z1 * radius; //v0
 
-						positions[vi+3] = x2 * radius; 
-						positions[vi+4] = y1 * radius; 
-						positions[vi+5] = z2 * radius; //v1
+						positions.buffer[vi+3] = x2 * radius; 
+						positions.buffer[vi+4] = y1 * radius; 
+						positions.buffer[vi+5] = z2 * radius; //v1
 
-						positions[vi+6] = x3 * radius; 
-						positions[vi+7] = y2 * radius; 
-						positions[vi+8] = z3 * radius; // v2
+						positions.buffer[vi+6] = x3 * radius; 
+						positions.buffer[vi+7] = y2 * radius; 
+						positions.buffer[vi+8] = z3 * radius; // v2
 
 
-						positions[vi+9] = x4 * radius; 
-						positions[vi+10] = y2 * radius; 
-						positions[vi+11] = z4 * radius; // v3
+						positions.buffer[vi+9] = x4 * radius; 
+						positions.buffer[vi+10] = y2 * radius; 
+						positions.buffer[vi+11] = z4 * radius; // v3
+
 
 						normals[vi] = x1;
 						normals[vi+1] = y1; 
@@ -326,26 +327,13 @@
 				options = options || {};
 				var geo = options.geo || false;
 
-				var res = {
-					min: vec3.create(),
-					max: vec3.create()
-				};;
-				vec3.set(res.min, Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY);
-				vec3.set(res.max, Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY);
-				for ( var i = 0, len = position.length; i < len; i+=3 ) {
-					res.min[0] = Math.min(position[i], res.min[0]);
-					res.max[0] = Math.max(position[i], res.max[0]);
-					res.min[1] = Math.min(position[i], res.min[1]);
-					res.max[1] = Math.max(position[i], res.max[1]);
-					res.min[2] = Math.min(position[i], res.min[2]);
-					res.max[2] = Math.max(position[i], res.max[2]);
-				}
+				var res = position.computeBounds("position");
 
 				if (geo) {
-					var size = vec3.create();
-					vec3.subtract(size, res.max, res.min);
+					
+					var size = v128.memory.toArray(v128.vector.sub(res.max, res.min, v128.vector.new()))
 					res.geo = utils.createBox({
-						position: res.min,
+						position: v128.memory.toArray(res.min, 3),
 						width: size[0],
 						height: size[1],
 						depth: size[2]

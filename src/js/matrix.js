@@ -44,13 +44,13 @@ exports.matrix = function (v128Instance, v128) {
 		mul : v128Instance.exports.mulM4M4,	
 		/**
 		 * fast multiply matrix * vector (WebAssembly method)
-		 * @method v128.matrix#tranform
+		 * @method v128.matrix#transform
 		 * @param {UInt32} pMat pointer of matrix 
 		 * @param {UInt32} pVec pointer of vector
 		 * @param {UInt32} pVecDest pointer of result transformed vector (matrix * vector)
 		 * @returns {UInt32} the pointor to result transformed vector
 		 */
-		tranform : v128Instance.exports.mulM4V4,
+		transform : v128Instance.exports.mulM4V4,
 		/**
 		 * fast create view matrix from camera position & target position (WebAssembly method)
 		 * @method v128.matrix#lookAt
@@ -102,6 +102,7 @@ exports.matrix = function (v128Instance, v128) {
 		},
 		/**
 		 * Creates a matrix from a vector translation
+		 * @method v128.matrix#fromTranslation
 		 * @param {UInt32} pVec pointer of Translation vector
 		 * @param {UInt32} pMatDest pointer of result translated matrix
 		 * @returns {UInt32} the pointor to result translated matrix
@@ -130,6 +131,7 @@ exports.matrix = function (v128Instance, v128) {
 
 		/**
 		 * Creates a matrix from a vector scaling
+		 * @method v128.matrix#fromScaling
 		 * @param {UInt32} pVec pointer of scaling vector
 		 * @param {UInt32} pMatDest pointer of result scaled matrix
 		 * @returns {UInt32} the pointor to result scaled matrix
@@ -157,6 +159,7 @@ exports.matrix = function (v128Instance, v128) {
 		},
 		/**
 		 * Creates a matrix from the given angle around the X axis
+		 * @method v128.matrix#fromXRotation
 		 * @param {Number} rad the angle to rotate the matrix by
 		 * @param {UInt32} pMatDest pointer of result rotated matrix
 		 * @returns {UInt32} the pointor to result rotated matrix
@@ -187,6 +190,7 @@ exports.matrix = function (v128Instance, v128) {
 
 		/**
 		 * Creates a matrix from the given angle around the Y axis
+		 * @method v128.matrix#fromYRotation
 		 * @param {Number} rad the angle to rotate the matrix by
 		 * @param {UInt32} pMatDest pointer of result rotated matrix
 		 * @returns {UInt32} the pointor to result rotated matrix
@@ -217,6 +221,7 @@ exports.matrix = function (v128Instance, v128) {
 
 		/**
 		 * Creates a matrix from the given angle around the Z axis
+		 * @method v128.matrix#fromZRotation
 		 * @param {Number} rad the angle to rotate the matrix by
 		 * @param {UInt32} pMatDest pointer of result rotated matrix
 		 * @returns {UInt32} the pointor to result rotated matrix

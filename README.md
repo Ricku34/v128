@@ -26,34 +26,6 @@ gl.uniformMatrix4fv(projectionLocation, false, v128.memory.toArray(projectionMat
 ```
 ## API Reference
 
-## Objects
-
-<dl>
-<dt><a href="#v128">v128</a> : <code>object</code></dt>
-<dd><p>WebAssembly &amp; Javascript module fast matrix vector calculations using SIMD vector 128 bits.</p>
-</dd>
-</dl>
-
-## Functions
-
-<dl>
-<dt><a href="#fromTranslation">fromTranslation(pVec, pMatDest)</a> ⇒ <code>UInt32</code></dt>
-<dd><p>Creates a matrix from a vector translation</p>
-</dd>
-<dt><a href="#fromScaling">fromScaling(pVec, pMatDest)</a> ⇒ <code>UInt32</code></dt>
-<dd><p>Creates a matrix from a vector scaling</p>
-</dd>
-<dt><a href="#fromXRotation">fromXRotation(rad, pMatDest)</a> ⇒ <code>UInt32</code></dt>
-<dd><p>Creates a matrix from the given angle around the X axis</p>
-</dd>
-<dt><a href="#fromYRotation">fromYRotation(rad, pMatDest)</a> ⇒ <code>UInt32</code></dt>
-<dd><p>Creates a matrix from the given angle around the Y axis</p>
-</dd>
-<dt><a href="#fromZRotation">fromZRotation(rad, pMatDest)</a> ⇒ <code>UInt32</code></dt>
-<dd><p>Creates a matrix from the given angle around the Z axis</p>
-</dd>
-</dl>
-
 <a name="v128"></a>
 
 ## v128 : <code>object</code>
@@ -75,10 +47,15 @@ WebAssembly & Javascript module fast matrix vector calculations using SIMD vecto
         * [.free(pointer)](#v128.matrix+free)
         * [.identity([pMatDest])](#v128.matrix+identity) ⇒
         * [.multiply(pMatA, pMatB, pMatDest)](#v128.matrix+multiply) ⇒ <code>UInt32</code>
-        * [.tranform(pMat, pVec, pVecDest)](#v128.matrix+tranform) ⇒ <code>UInt32</code>
+        * [.transform(pMat, pVec, pVecDest)](#v128.matrix+transform) ⇒ <code>UInt32</code>
         * [.lookAt(pCamPos, pTargetPos, pMatDest)](#v128.matrix+lookAt) ⇒ <code>UInt32</code>
         * [.invert(pMat, pMatDest)](#v128.matrix+invert) ⇒ <code>UInt32</code>
         * [.perspective(fovy, aspect, near, far, pMatDest)](#v128.matrix+perspective) ⇒ <code>UInt32</code>
+        * [.fromTranslation(pVec, pMatDest)](#v128.matrix+fromTranslation) ⇒ <code>UInt32</code>
+        * [.fromScaling(pVec, pMatDest)](#v128.matrix+fromScaling) ⇒ <code>UInt32</code>
+        * [.fromXRotation(rad, pMatDest)](#v128.matrix+fromXRotation) ⇒ <code>UInt32</code>
+        * [.fromYRotation(rad, pMatDest)](#v128.matrix+fromYRotation) ⇒ <code>UInt32</code>
+        * [.fromZRotation(rad, pMatDest)](#v128.matrix+fromZRotation) ⇒ <code>UInt32</code>
         * [.rotateX(pMat, angle, pMatDest)](#v128.matrix+rotateX) ⇒ <code>UInt32</code>
         * [.rotateY(pMat, angle, pMatDest)](#v128.matrix+rotateY) ⇒ <code>UInt32</code>
         * [.rotateZ(pMat, angle, pMatDest)](#v128.matrix+rotateZ) ⇒ <code>UInt32</code>
@@ -96,6 +73,7 @@ WebAssembly & Javascript module fast matrix vector calculations using SIMD vecto
         * [.dot(pVecA, pVecB)](#v128.vector+dot) ⇒ <code>Number</code>
         * [.scale(pVec, scale, pVecDest)](#v128.vector+scale) ⇒ <code>UInt32</code>
     * [.uniformBlock](#v128.uniformBlock) : <code>object</code>
+    * [.vertexBuffer](#v128.vertexBuffer) : <code>object</code>
     * [.init(size)](#v128.init) ⇒ <code>Promise</code>
 
 <a name="v128.ready"></a>
@@ -194,10 +172,15 @@ matrix API
     * [.free(pointer)](#v128.matrix+free)
     * [.identity([pMatDest])](#v128.matrix+identity) ⇒
     * [.multiply(pMatA, pMatB, pMatDest)](#v128.matrix+multiply) ⇒ <code>UInt32</code>
-    * [.tranform(pMat, pVec, pVecDest)](#v128.matrix+tranform) ⇒ <code>UInt32</code>
+    * [.transform(pMat, pVec, pVecDest)](#v128.matrix+transform) ⇒ <code>UInt32</code>
     * [.lookAt(pCamPos, pTargetPos, pMatDest)](#v128.matrix+lookAt) ⇒ <code>UInt32</code>
     * [.invert(pMat, pMatDest)](#v128.matrix+invert) ⇒ <code>UInt32</code>
     * [.perspective(fovy, aspect, near, far, pMatDest)](#v128.matrix+perspective) ⇒ <code>UInt32</code>
+    * [.fromTranslation(pVec, pMatDest)](#v128.matrix+fromTranslation) ⇒ <code>UInt32</code>
+    * [.fromScaling(pVec, pMatDest)](#v128.matrix+fromScaling) ⇒ <code>UInt32</code>
+    * [.fromXRotation(rad, pMatDest)](#v128.matrix+fromXRotation) ⇒ <code>UInt32</code>
+    * [.fromYRotation(rad, pMatDest)](#v128.matrix+fromYRotation) ⇒ <code>UInt32</code>
+    * [.fromZRotation(rad, pMatDest)](#v128.matrix+fromZRotation) ⇒ <code>UInt32</code>
     * [.rotateX(pMat, angle, pMatDest)](#v128.matrix+rotateX) ⇒ <code>UInt32</code>
     * [.rotateY(pMat, angle, pMatDest)](#v128.matrix+rotateY) ⇒ <code>UInt32</code>
     * [.rotateZ(pMat, angle, pMatDest)](#v128.matrix+rotateZ) ⇒ <code>UInt32</code>
@@ -252,9 +235,9 @@ fast multiply 2 matrix (WebAssembly method)
 | pMatB | <code>UInt32</code> | pointer of matrix B |
 | pMatDest | <code>UInt32</code> | pointer of result matrix A*B |
 
-<a name="v128.matrix+tranform"></a>
+<a name="v128.matrix+transform"></a>
 
-#### matrix.tranform(pMat, pVec, pVecDest) ⇒ <code>UInt32</code>
+#### matrix.transform(pMat, pVec, pVecDest) ⇒ <code>UInt32</code>
 fast multiply matrix * vector (WebAssembly method)
 
 **Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
@@ -308,6 +291,71 @@ create projection matrix from perspective data
 | near | <code>number</code> | Near clipping bound of the frustum |
 | far | <code>number</code> | Far clipping bound of the frustum |
 | pMatDest | <code>UInt32</code> | pointer of result projection matrix |
+
+<a name="v128.matrix+fromTranslation"></a>
+
+#### matrix.fromTranslation(pVec, pMatDest) ⇒ <code>UInt32</code>
+Creates a matrix from a vector translation
+
+**Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
+**Returns**: <code>UInt32</code> - the pointor to result translated matrix  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| pVec | <code>UInt32</code> | pointer of Translation vector |
+| pMatDest | <code>UInt32</code> | pointer of result translated matrix |
+
+<a name="v128.matrix+fromScaling"></a>
+
+#### matrix.fromScaling(pVec, pMatDest) ⇒ <code>UInt32</code>
+Creates a matrix from a vector scaling
+
+**Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
+**Returns**: <code>UInt32</code> - the pointor to result scaled matrix  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| pVec | <code>UInt32</code> | pointer of scaling vector |
+| pMatDest | <code>UInt32</code> | pointer of result scaled matrix |
+
+<a name="v128.matrix+fromXRotation"></a>
+
+#### matrix.fromXRotation(rad, pMatDest) ⇒ <code>UInt32</code>
+Creates a matrix from the given angle around the X axis
+
+**Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
+**Returns**: <code>UInt32</code> - the pointor to result rotated matrix  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| rad | <code>Number</code> | the angle to rotate the matrix by |
+| pMatDest | <code>UInt32</code> | pointer of result rotated matrix |
+
+<a name="v128.matrix+fromYRotation"></a>
+
+#### matrix.fromYRotation(rad, pMatDest) ⇒ <code>UInt32</code>
+Creates a matrix from the given angle around the Y axis
+
+**Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
+**Returns**: <code>UInt32</code> - the pointor to result rotated matrix  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| rad | <code>Number</code> | the angle to rotate the matrix by |
+| pMatDest | <code>UInt32</code> | pointer of result rotated matrix |
+
+<a name="v128.matrix+fromZRotation"></a>
+
+#### matrix.fromZRotation(rad, pMatDest) ⇒ <code>UInt32</code>
+Creates a matrix from the given angle around the Z axis
+
+**Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
+**Returns**: <code>UInt32</code> - the pointor to result rotated matrix  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| rad | <code>Number</code> | the angle to rotate the matrix by |
+| pMatDest | <code>UInt32</code> | pointer of result rotated matrix |
 
 <a name="v128.matrix+rotateX"></a>
 
@@ -533,7 +581,13 @@ fast scale vector by a scalar number
 <a name="v128.uniformBlock"></a>
 
 ### v128.uniformBlock : <code>object</code>
-WebGL2 Uniform Buffer Objects API (UBOs)
+WebGL2 Uniform Buffer Objects API (UBOs) using std140 layout.
+
+**Kind**: static namespace of [<code>v128</code>](#v128)  
+<a name="v128.vertexBuffer"></a>
+
+### v128.vertexBuffer : <code>object</code>
+WebGL Vertex Buffer Objects API (VBOs)
 
 **Kind**: static namespace of [<code>v128</code>](#v128)  
 <a name="v128.init"></a>
@@ -547,70 +601,5 @@ Initialize the v128 API
 | Param | Type | Description |
 | --- | --- | --- |
 | size | <code>Number</code> | the number of page for v128 Memory (page = 64Kb) |
-
-<a name="fromTranslation"></a>
-
-## fromTranslation(pVec, pMatDest) ⇒ <code>UInt32</code>
-Creates a matrix from a vector translation
-
-**Kind**: global function  
-**Returns**: <code>UInt32</code> - the pointor to result translated matrix  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| pVec | <code>UInt32</code> | pointer of Translation vector |
-| pMatDest | <code>UInt32</code> | pointer of result translated matrix |
-
-<a name="fromScaling"></a>
-
-## fromScaling(pVec, pMatDest) ⇒ <code>UInt32</code>
-Creates a matrix from a vector scaling
-
-**Kind**: global function  
-**Returns**: <code>UInt32</code> - the pointor to result scaled matrix  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| pVec | <code>UInt32</code> | pointer of scaling vector |
-| pMatDest | <code>UInt32</code> | pointer of result scaled matrix |
-
-<a name="fromXRotation"></a>
-
-## fromXRotation(rad, pMatDest) ⇒ <code>UInt32</code>
-Creates a matrix from the given angle around the X axis
-
-**Kind**: global function  
-**Returns**: <code>UInt32</code> - the pointor to result rotated matrix  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| rad | <code>Number</code> | the angle to rotate the matrix by |
-| pMatDest | <code>UInt32</code> | pointer of result rotated matrix |
-
-<a name="fromYRotation"></a>
-
-## fromYRotation(rad, pMatDest) ⇒ <code>UInt32</code>
-Creates a matrix from the given angle around the Y axis
-
-**Kind**: global function  
-**Returns**: <code>UInt32</code> - the pointor to result rotated matrix  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| rad | <code>Number</code> | the angle to rotate the matrix by |
-| pMatDest | <code>UInt32</code> | pointer of result rotated matrix |
-
-<a name="fromZRotation"></a>
-
-## fromZRotation(rad, pMatDest) ⇒ <code>UInt32</code>
-Creates a matrix from the given angle around the Z axis
-
-**Kind**: global function  
-**Returns**: <code>UInt32</code> - the pointor to result rotated matrix  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| rad | <code>Number</code> | the angle to rotate the matrix by |
-| pMatDest | <code>UInt32</code> | pointer of result rotated matrix |
 
 
