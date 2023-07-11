@@ -1,4 +1,4 @@
-	(func $lookAt (param $pos v128) (param $target v128) (result v128 v128 v128 v128)
+	(func $lookAt (param $pos v128) (param $target v128) (param $up v128) (result v128 v128 v128 v128)
 		(local $at v128)
 		(local $right v128)
 		(local $Yaxis v128)
@@ -19,7 +19,7 @@
 			)
 			(else
 				
-				v128.const f32x4 0.0 1.0 0.0 0.0
+				local.get $up
 				local.get $at
 				(local.tee $at (call $normalizeV3))
 				(local.tee $right (call $crossV3V3))

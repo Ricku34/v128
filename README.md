@@ -16,7 +16,8 @@ const v128 = require("v128");
 await v128.init(4);
 let cameraPos = v128.vector.new(0,2.5,-4);
 let center = v128.vector.new(0,0,0);
-let viewMatrix = v128.matrix.lookAt(cameraPos,center,v128.matrix.new());
+let up = v128.vector.new(0,1,0);
+let viewMatrix = v128.matrix.lookAt(cameraPos,center,up,v128.matrix.new());
 let projectionMatrix = v128.matrix.perspective(Math.PI/2,4/3,0.1,1000,v128.matrix.new());
 let viewProjection = v128.matrix.multiply(viewMatrix, projectionMatrix,v128.matrix.new());
 ```
@@ -48,7 +49,7 @@ WebAssembly & Javascript module fast matrix vector calculations using SIMD vecto
         * [.identity([pMatDest])](#v128.matrix+identity) ⇒
         * [.multiply(pMatA, pMatB, pMatDest)](#v128.matrix+multiply) ⇒ <code>UInt32</code>
         * [.transform(pMat, pVec, pVecDest)](#v128.matrix+transform) ⇒ <code>UInt32</code>
-        * [.lookAt(pCamPos, pTargetPos, pMatDest)](#v128.matrix+lookAt) ⇒ <code>UInt32</code>
+        * [.lookAt(pCamPos, pTargetPos, pUpAxis, pMatDest)](#v128.matrix+lookAt) ⇒ <code>UInt32</code>
         * [.invert(pMat, pMatDest)](#v128.matrix+invert) ⇒ <code>UInt32</code>
         * [.perspective(fovy, aspect, near, far, pMatDest)](#v128.matrix+perspective) ⇒ <code>UInt32</code>
         * [.fromTranslation(pVec, pMatDest)](#v128.matrix+fromTranslation) ⇒ <code>UInt32</code>
@@ -109,7 +110,7 @@ Randomize all the memory
 allocate float memory array
 
 **Kind**: instance method of [<code>memory</code>](#v128.memory)  
-**Returns**: <code>UInt32</code> - the pointor from v128 memory  
+**Returns**: <code>UInt32</code> - the pointer from v128 memory  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -124,7 +125,7 @@ free float memory
 
 | Param | Type | Description |
 | --- | --- | --- |
-| pointer | <code>UInt32</code> | the pointor to free |
+| pointer | <code>UInt32</code> | the pointer to free |
 
 <a name="v128.memory+fill"></a>
 
@@ -173,7 +174,7 @@ matrix API
     * [.identity([pMatDest])](#v128.matrix+identity) ⇒
     * [.multiply(pMatA, pMatB, pMatDest)](#v128.matrix+multiply) ⇒ <code>UInt32</code>
     * [.transform(pMat, pVec, pVecDest)](#v128.matrix+transform) ⇒ <code>UInt32</code>
-    * [.lookAt(pCamPos, pTargetPos, pMatDest)](#v128.matrix+lookAt) ⇒ <code>UInt32</code>
+    * [.lookAt(pCamPos, pTargetPos, pUpAxis, pMatDest)](#v128.matrix+lookAt) ⇒ <code>UInt32</code>
     * [.invert(pMat, pMatDest)](#v128.matrix+invert) ⇒ <code>UInt32</code>
     * [.perspective(fovy, aspect, near, far, pMatDest)](#v128.matrix+perspective) ⇒ <code>UInt32</code>
     * [.fromTranslation(pVec, pMatDest)](#v128.matrix+fromTranslation) ⇒ <code>UInt32</code>
@@ -192,7 +193,7 @@ matrix API
 fast create new matrix from initial values
 
 **Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
-**Returns**: <code>UInt32</code> - the pointor to new matrix  
+**Returns**: <code>UInt32</code> - the pointer to new matrix  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -207,7 +208,7 @@ free the matrix
 
 | Param | Type | Description |
 | --- | --- | --- |
-| pointer | <code>UInt32</code> | the pointor of matrix to free |
+| pointer | <code>UInt32</code> | the pointer of matrix to free |
 
 <a name="v128.matrix+identity"></a>
 
@@ -215,11 +216,11 @@ free the matrix
 set or create matrix identity
 
 **Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
-**Returns**: the pointor of matrix identity  
+**Returns**: the pointer of matrix identity  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [pMatDest] | <code>UInt32</code> | the pointor of matrix to set |
+| [pMatDest] | <code>UInt32</code> | the pointer of matrix to set |
 
 <a name="v128.matrix+multiply"></a>
 
@@ -227,7 +228,7 @@ set or create matrix identity
 fast multiply 2 matrix (WebAssembly method)
 
 **Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
-**Returns**: <code>UInt32</code> - the pointor to result matrix A*B  
+**Returns**: <code>UInt32</code> - the pointer to result matrix A*B  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -241,7 +242,7 @@ fast multiply 2 matrix (WebAssembly method)
 fast multiply matrix * vector (WebAssembly method)
 
 **Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
-**Returns**: <code>UInt32</code> - the pointor to result transformed vector  
+**Returns**: <code>UInt32</code> - the pointer to result transformed vector  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -251,16 +252,17 @@ fast multiply matrix * vector (WebAssembly method)
 
 <a name="v128.matrix+lookAt"></a>
 
-#### matrix.lookAt(pCamPos, pTargetPos, pMatDest) ⇒ <code>UInt32</code>
+#### matrix.lookAt(pCamPos, pTargetPos, pUpAxis, pMatDest) ⇒ <code>UInt32</code>
 fast create view matrix from camera position & target position (WebAssembly method)
 
 **Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
-**Returns**: <code>UInt32</code> - the pointor to result view matrix  
+**Returns**: <code>UInt32</code> - the pointer to result view matrix  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | pCamPos | <code>UInt32</code> | pointer of camera position |
 | pTargetPos | <code>UInt32</code> | pointer of target position |
+| pUpAxis | <code>UInt32</code> | pointer of up axis |
 | pMatDest | <code>UInt32</code> | pointer of result view matrix |
 
 <a name="v128.matrix+invert"></a>
@@ -269,7 +271,7 @@ fast create view matrix from camera position & target position (WebAssembly meth
 fast invert matrix (WebAssembly method)
 
 **Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
-**Returns**: <code>UInt32</code> - the pointor to inversed matrix  
+**Returns**: <code>UInt32</code> - the pointer to inversed matrix  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -282,7 +284,7 @@ fast invert matrix (WebAssembly method)
 create projection matrix from perspective data
 
 **Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
-**Returns**: <code>UInt32</code> - the pointor to result projection matrix  
+**Returns**: <code>UInt32</code> - the pointer to result projection matrix  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -298,7 +300,7 @@ create projection matrix from perspective data
 Creates a matrix from a vector translation
 
 **Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
-**Returns**: <code>UInt32</code> - the pointor to result translated matrix  
+**Returns**: <code>UInt32</code> - the pointer to result translated matrix  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -311,7 +313,7 @@ Creates a matrix from a vector translation
 Creates a matrix from a vector scaling
 
 **Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
-**Returns**: <code>UInt32</code> - the pointor to result scaled matrix  
+**Returns**: <code>UInt32</code> - the pointer to result scaled matrix  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -324,7 +326,7 @@ Creates a matrix from a vector scaling
 Creates a matrix from the given angle around the X axis
 
 **Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
-**Returns**: <code>UInt32</code> - the pointor to result rotated matrix  
+**Returns**: <code>UInt32</code> - the pointer to result rotated matrix  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -337,7 +339,7 @@ Creates a matrix from the given angle around the X axis
 Creates a matrix from the given angle around the Y axis
 
 **Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
-**Returns**: <code>UInt32</code> - the pointor to result rotated matrix  
+**Returns**: <code>UInt32</code> - the pointer to result rotated matrix  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -350,7 +352,7 @@ Creates a matrix from the given angle around the Y axis
 Creates a matrix from the given angle around the Z axis
 
 **Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
-**Returns**: <code>UInt32</code> - the pointor to result rotated matrix  
+**Returns**: <code>UInt32</code> - the pointer to result rotated matrix  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -363,7 +365,7 @@ Creates a matrix from the given angle around the Z axis
 Rotates a matrix by the given angle around the X axis
 
 **Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
-**Returns**: <code>UInt32</code> - the pointor of the receiving matrix  
+**Returns**: <code>UInt32</code> - the pointer of the receiving matrix  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -377,7 +379,7 @@ Rotates a matrix by the given angle around the X axis
 Rotates a matrix by the given angle around the Y axis
 
 **Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
-**Returns**: <code>UInt32</code> - the pointor of the receiving matrix  
+**Returns**: <code>UInt32</code> - the pointer of the receiving matrix  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -391,7 +393,7 @@ Rotates a matrix by the given angle around the Y axis
 Rotates a matrix by the given angle around the Z axis
 
 **Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
-**Returns**: <code>UInt32</code> - the pointor of the receiving matrix  
+**Returns**: <code>UInt32</code> - the pointer of the receiving matrix  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -405,7 +407,7 @@ Rotates a matrix by the given angle around the Z axis
 Translates a matrix by the given vector
 
 **Kind**: instance method of [<code>matrix</code>](#v128.matrix)  
-**Returns**: <code>UInt32</code> - the pointor of the receiving matrix  
+**Returns**: <code>UInt32</code> - the pointer of the receiving matrix  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -439,7 +441,7 @@ vector API
 fast create new vector from initial values
 
 **Kind**: instance method of [<code>vector</code>](#v128.vector)  
-**Returns**: <code>UInt32</code> - the pointor to new vector  
+**Returns**: <code>UInt32</code> - the pointer to new vector  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -454,7 +456,7 @@ free the vector
 
 | Param | Type | Description |
 | --- | --- | --- |
-| pointer | <code>UInt32</code> | the pointor of vector to free |
+| pointer | <code>UInt32</code> | the pointer of vector to free |
 
 <a name="v128.vector+length"></a>
 

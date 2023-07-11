@@ -23,26 +23,26 @@ exports.vertexBuffer = function (v128Instance, v128) {
 						vertexSize += sizeByType[vertexAttribInfo[prop]];
 					}
 				}
-				let pointor = v128.memory.alloc(vertexCount*vertexSize);
+				let pointer = v128.memory.alloc(vertexCount*vertexSize);
 				function Vertex(index) {
-					let pointors = new Object();
+					let pointers = new Object();
 					Object.defineProperties(this, {
 						buffer : {
 							enumerable : true,
 							writable : false,
-							value : v128.memory.toArray(pointor + (index * vertexSize * 4), vertexSize )
+							value : v128.memory.toArray(pointer + (index * vertexSize * 4), vertexSize )
 						},
-						pointors : {
+						pointers : {
 							enumerable : true,
 							writable : false,
-							value : pointors
+							value : pointers
 						}
 					});
 					let offset = 0;
 					for (var prop in vertexAttribInfo) {
-						var p = pointor + ((index * vertexSize) + offset) * 4;
+						var p = pointer + ((index * vertexSize) + offset) * 4;
 						var size = sizeByType[vertexAttribInfo[prop]];
-						Object.defineProperty(pointors, prop, {
+						Object.defineProperty(pointers, prop, {
 							enumerable : true,
 							writable : false,
 							value : p
@@ -78,7 +78,7 @@ exports.vertexBuffer = function (v128Instance, v128) {
 					buffer : {
 						enumerable : true,
 						writable : false,
-						value : v128.memory.toArray(pointor)
+						value : v128.memory.toArray(pointer)
 					},
 					count : {
 						enumerable : true,
@@ -101,7 +101,21 @@ exports.vertexBuffer = function (v128Instance, v128) {
 						enumerable : true,
 						writable : false,
 						value : function (attribute) {
-							var attribPt = this.getVertex(0).pointors[attribute];
+							if(!this.info[attribute]) {
+								throw new Error("attribute '"+attribute+"' not found in vertexBuffer.");
+							}
+							var bounds
+							if(this.info[attribute]==v128.TYPES.FLOAT_VEC2){
+								bounds = v128Instance.exports.boundsV2;
+							} else if(this.info[attribute]==v128.TYPES.FLOAT_VEC3){
+								bounds = v128Instance.exports.boundsV3;
+							} else if(this.info[attribute]==v128.TYPES.FLOAT_VEC4){
+								bounds = v128Instance.exports.boundsV4;
+							} else {
+								throw new Error("unsupported type for compute bounds on attribute '"+attribute+"' .");
+							}
+
+							var attribPt = this.getVertex(0).pointers[attribute];
 							var minPt = v128.vector.new(); //v128.memory.alloc(sizeByType[vertexAttribInfo[attribute]]);
 							var minBuf = v128.memory.toArray(minPt);
 							for(var i=0;i<minBuf.length;i++) 
@@ -110,11 +124,31 @@ exports.vertexBuffer = function (v128Instance, v128) {
 							var maxBuf = v128.memory.toArray(maxPt); 
 							for(var i=0;i<maxBuf.length;i++) 
 								maxBuf[i] = Number.NEGATIVE_INFINITY; 
-							v128Instance.exports.boundsV3(attribPt, vertexCount, vertexSize, minPt, maxPt)
+							bounds(attribPt, vertexCount, vertexSize, minPt, maxPt)
 							return {
 								min : minPt,
 								max : maxPt
 							};
+						}
+					},
+					transform : {
+						enumerable : true,
+						writable : false,
+						value : function (attribute, matrix) {
+							if(!this.info[attribute]) {
+								throw new Error("attribute '"+attribute+"' not found in vertexBuffer.");
+							}
+							var transform
+							if(this.info[attribute]==v128.TYPES.FLOAT_VEC3){
+								transform = v128Instance.exports.transformV3;
+							} else if(this.info[attribute]==v128.TYPES.FLOAT_VEC4){
+								transform = v128Instance.exports.transformV4;
+							} else {
+								throw new Error("unsupported type for compute bounds on attribute '"+attribute+"' .");
+							}
+							var attribPt = this.getVertex(0).pointers[attribute];
+							transform(attribPt, vertexCount, vertexSize, matrix);
+							
 						}
 					} 
 				});

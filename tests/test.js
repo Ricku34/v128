@@ -39,7 +39,7 @@ console.assert(v128.init);
 
 	v128.memory.free(tmp);
 
-	var lookAtMat =  v128.matrix.lookAt(camPos,AT,v128.matrix.new());
+	var lookAtMat =  v128.matrix.lookAt(camPos,AT,UP,v128.matrix.new());
 	var glLookAt = mat4.lookAt(mat4.create(),v128.memory.slice(camPos),v128.memory.slice(AT),v128.memory.slice(UP));
 	console.assert(mat4.equals(glLookAt, v128.memory.slice(lookAtMat)))
 	

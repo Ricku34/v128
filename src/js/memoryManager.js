@@ -36,7 +36,7 @@ exports.memoryManager = function (v128Instance) {
 	 * allocate float memory array
 	 * @method v128.memory#alloc
 	 * @param {Number} size the number of float to allocate
-	 * @returns {UInt32} the pointor from v128 memory
+	 * @returns {UInt32} the pointer from v128 memory
 	 */
 	manager.alloc = function(size) {
 		if(released[size] && released[size].length) {
@@ -55,7 +55,7 @@ exports.memoryManager = function (v128Instance) {
 	/**
 	 * free float memory
 	 * @method v128.memory#free
-	 * @param {UInt32} pointer  the pointor to free
+	 * @param {UInt32} pointer  the pointer to free
 	 */
 	manager.free = function(pointer) {
 		var idx = pointer/4;

@@ -4,7 +4,7 @@ exports.matrix = function (v128Instance, v128) {
 		 * fast create new matrix from initial values 
 		 * @method v128.matrix#new
 		 * @param  {...Numbers} vals number values to fill into matrix
-		 * @returns {UInt32} the pointor to new matrix
+		 * @returns {UInt32} the pointer to new matrix
 		 */
 		new : function(...vals) { 
 			var p = v128.memory.alloc(16);
@@ -16,14 +16,14 @@ exports.matrix = function (v128Instance, v128) {
 		/**
 		 * free the matrix
 		 * @method v128.matrix#free
-		 * @param {UInt32} pointer  the pointor of matrix to free
+		 * @param {UInt32} pointer  the pointer of matrix to free
 		 */
 		free : v128.memory.free,
 		/**
 		 * set or create matrix identity
 		 * @method v128.matrix#identity
-		 * @param {UInt32} [pMatDest] the pointor of matrix to set
-		 * @returns the pointor of matrix identity
+		 * @param {UInt32} [pMatDest] the pointer of matrix to set
+		 * @returns the pointer of matrix identity
 		 */
 		identity : function(pMatDest) {
 			if(pMatDest===undefined) {
@@ -38,7 +38,7 @@ exports.matrix = function (v128Instance, v128) {
 		 * @param {UInt32} pMatA pointer of matrix A
 		 * @param {UInt32} pMatB pointer of matrix B
 		 * @param {UInt32} pMatDest pointer of result matrix A*B
-		 * @returns {UInt32} the pointor to result matrix A*B
+		 * @returns {UInt32} the pointer to result matrix A*B
 		 */
 		multiply : v128Instance.exports.mulM4M4,
 		mul : v128Instance.exports.mulM4M4,	
@@ -48,7 +48,7 @@ exports.matrix = function (v128Instance, v128) {
 		 * @param {UInt32} pMat pointer of matrix 
 		 * @param {UInt32} pVec pointer of vector
 		 * @param {UInt32} pVecDest pointer of result transformed vector (matrix * vector)
-		 * @returns {UInt32} the pointor to result transformed vector
+		 * @returns {UInt32} the pointer to result transformed vector
 		 */
 		transform : v128Instance.exports.mulM4V4,
 		/**
@@ -56,8 +56,9 @@ exports.matrix = function (v128Instance, v128) {
 		 * @method v128.matrix#lookAt
 		 * @param {UInt32} pCamPos pointer of camera position 
 		 * @param {UInt32} pTargetPos pointer of target position
+		 * @param {UInt32} pUpAxis pointer of up axis
 		 * @param {UInt32} pMatDest pointer of result view matrix
-		 * @returns {UInt32} the pointor to result view matrix
+		 * @returns {UInt32} the pointer to result view matrix
 		 */
 		lookAt : v128Instance.exports.lookAt,
 		/**
@@ -65,7 +66,7 @@ exports.matrix = function (v128Instance, v128) {
 		 * @method v128.matrix#invert
 		 * @param {UInt32} pMat pointer of th matrix 
 		  * @param {UInt32} pMatDest pointer of inversed matrix
-		 * @returns {UInt32} the pointor to inversed matrix
+		 * @returns {UInt32} the pointer to inversed matrix
 		 */
 		invert : v128Instance.exports.invert,
 		/**
@@ -76,7 +77,7 @@ exports.matrix = function (v128Instance, v128) {
 		 * @param {number} near Near clipping bound of the frustum
 		 * @param {number} far Far clipping bound of the frustum
 		 * @param {UInt32} pMatDest pointer of result projection matrix
-		 * @returns {UInt32} the pointor to result projection matrix
+		 * @returns {UInt32} the pointer to result projection matrix
 		 */
 		perspective : function (fovy, aspect, near, far, pMatDest) {
 			var f = 1.0 / Math.tan(fovy / 2),
@@ -105,7 +106,7 @@ exports.matrix = function (v128Instance, v128) {
 		 * @method v128.matrix#fromTranslation
 		 * @param {UInt32} pVec pointer of Translation vector
 		 * @param {UInt32} pMatDest pointer of result translated matrix
-		 * @returns {UInt32} the pointor to result translated matrix
+		 * @returns {UInt32} the pointer to result translated matrix
 		 */
 		fromTranslation : function(pVec, pMatDest) {
 			var v = v128.memory.toArray(pVec,3);
@@ -134,7 +135,7 @@ exports.matrix = function (v128Instance, v128) {
 		 * @method v128.matrix#fromScaling
 		 * @param {UInt32} pVec pointer of scaling vector
 		 * @param {UInt32} pMatDest pointer of result scaled matrix
-		 * @returns {UInt32} the pointor to result scaled matrix
+		 * @returns {UInt32} the pointer to result scaled matrix
 		 */
 		fromScaling : function(pVec, pMatDest) {
 			var v = v128.memory.toArray(pVec,3);
@@ -162,7 +163,7 @@ exports.matrix = function (v128Instance, v128) {
 		 * @method v128.matrix#fromXRotation
 		 * @param {Number} rad the angle to rotate the matrix by
 		 * @param {UInt32} pMatDest pointer of result rotated matrix
-		 * @returns {UInt32} the pointor to result rotated matrix
+		 * @returns {UInt32} the pointer to result rotated matrix
 		 */
 		fromXRotation : function(rad, pMatDest) {
 			var s = Math.sin(rad),
@@ -193,7 +194,7 @@ exports.matrix = function (v128Instance, v128) {
 		 * @method v128.matrix#fromYRotation
 		 * @param {Number} rad the angle to rotate the matrix by
 		 * @param {UInt32} pMatDest pointer of result rotated matrix
-		 * @returns {UInt32} the pointor to result rotated matrix
+		 * @returns {UInt32} the pointer to result rotated matrix
 		 */
 		fromYRotation : function(rad, pMatDest) {
 			var s = Math.sin(rad),
@@ -224,7 +225,7 @@ exports.matrix = function (v128Instance, v128) {
 		 * @method v128.matrix#fromZRotation
 		 * @param {Number} rad the angle to rotate the matrix by
 		 * @param {UInt32} pMatDest pointer of result rotated matrix
-		 * @returns {UInt32} the pointor to result rotated matrix
+		 * @returns {UInt32} the pointer to result rotated matrix
 		 */
 		fromZRotation : function(rad, pMatDest) {
 			var s = Math.sin(rad),
@@ -256,7 +257,7 @@ exports.matrix = function (v128Instance, v128) {
 		 * @param {UInt32} pMat pointer of matrix to rotate
 		 * @param {Number} angle the angle in radian to rotate the matrix by
 		 * @param {UInt32} pMatDest pointer of the receiving matrix
-		 * @returns {UInt32} the pointor of the receiving matrix
+		 * @returns {UInt32} the pointer of the receiving matrix
 		 */
 		rotateX : v128Instance.exports.rotateX,
 		/**
@@ -265,7 +266,7 @@ exports.matrix = function (v128Instance, v128) {
 		 * @param {UInt32} pMat pointer of matrix to rotate
 		 * @param {Number} angle the angle in radian to rotate the matrix by
 		 * @param {UInt32} pMatDest pointer of the receiving matrix
-		 * @returns {UInt32} the pointor of the receiving matrix
+		 * @returns {UInt32} the pointer of the receiving matrix
 		 */
 		rotateY : v128Instance.exports.rotateY,
 		/**
@@ -274,7 +275,7 @@ exports.matrix = function (v128Instance, v128) {
 		 * @param {UInt32} pMat pointer of matrix to rotate
 		 * @param {Number} angle the angle in radian to rotate the matrix by
 		 * @param {UInt32} pMatDest pointer of the receiving matrix
-		 * @returns {UInt32} the pointor of the receiving matrix
+		 * @returns {UInt32} the pointer of the receiving matrix
 		 */
 		rotateZ : v128Instance.exports.rotateZ,
 		/**
@@ -283,7 +284,7 @@ exports.matrix = function (v128Instance, v128) {
 		 * @param {UInt32} pMat pointer of matrix to translate
 		 * @param {Number} pVec pointer of vector to translate by
 		 * @param {UInt32} pMatDest pointer of the receiving matrix
-		 * @returns {UInt32} the pointor of the receiving matrix
+		 * @returns {UInt32} the pointer of the receiving matrix
 		 */
 		translate : v128Instance.exports.translate
 

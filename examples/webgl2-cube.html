@@ -182,8 +182,8 @@
 		
 
 		var projMatrix = v128.matrix.perspective(Math.PI / 2, gl.drawingBufferWidth / gl.drawingBufferHeight, 0.1, 10.0,v128.matrix.new());
-		var viewMatrix = v128.matrix.lookAt(sceneUniformData.pointors.eyePosition, utils.ZEROS,v128.matrix.new());
-		v128.matrix.multiply(projMatrix, viewMatrix, sceneUniformData.pointors.viewProj);
+		var viewMatrix = v128.matrix.lookAt(sceneUniformData.pointers.eyePosition, utils.ZEROS, utils.UP, v128.matrix.new());
+		v128.matrix.multiply(projMatrix, viewMatrix, sceneUniformData.pointers.viewProj);
 		v128.memory.free(viewMatrix);
 		v128.memory.free(projMatrix);
 		var modelMatrix = v128.matrix.new();

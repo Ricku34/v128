@@ -152,7 +152,7 @@
 		out vec4 fragColor;
 
 		void main() {
-			fragColor = vec4(1.0, 0.0, 0.0, 1.0);
+			fragColor = vec4(1.0, 0.0, 0.0, 0.2);
 		}
 	</script>
 	<script type="text/javascript">
@@ -160,8 +160,6 @@
 		await utils.ready;
 		var occlusionCullingEnabled = true;
 		var showHUD = true;
-
-		//var vbo = v128.vertexBuffer.create(160,{ pos : v128.TYPES.FLOAT_VEC3, normal : v128.TYPES.FLOAT_VEC3, uv : v128.TYPES.FLOAT_VEC2});
 
 
 		document.getElementById("occlusion-toggle").addEventListener("change", function() {
@@ -399,13 +397,13 @@
 		
 		// scene main camera
 		var projMatrix = v128.matrix.perspective(Math.PI / 2, gl.drawingBufferWidth / gl.drawingBufferHeight, 0.1, 10.0, v128.matrix.new());
-		var viewMatrix = v128.matrix.lookAt(sceneUniformData.pointors.eyePosition, utils.ZEROS, v128.matrix.new());
-		v128.matrix.multiply(projMatrix, viewMatrix, sceneUniformData.pointors.viewProj);
+		var viewMatrix = v128.matrix.lookAt(sceneUniformData.pointers.eyePosition, utils.ZEROS, utils.UP, v128.matrix.new());
+		v128.matrix.multiply(projMatrix, viewMatrix, sceneUniformData.pointers.viewProj);
 
 		// top down assist camera
 		var projMatrixAssistCam = v128.matrix.perspective( Math.PI / 2, gl.drawingBufferWidth / gl.drawingBufferHeight, 0.1, 10.0,  v128.matrix.new()); 
-		var viewMatrixAssistCam = v128.matrix.lookAt(assistCamUniformData.pointors.eyePosition, utils.ZEROS, v128.matrix.new()); 
-		v128.matrix.multiply(projMatrixAssistCam, viewMatrixAssistCam, assistCamUniformData.pointors.viewProj);
+		var viewMatrixAssistCam = v128.matrix.lookAt(assistCamUniformData.pointers.eyePosition, utils.ZEROS, v128.vector.new(0, 0, -1), v128.matrix.new()); 
+		v128.matrix.multiply(projMatrixAssistCam, viewMatrixAssistCam, assistCamUniformData.pointers.viewProj);
 
 
 		gl.useProgram(hudProgram);
@@ -501,8 +499,9 @@
 					let r = v128.memory.toArray(sphere.rotate);
 					r[1] += 0.003;
 
-					utils.xformMatrix(sphere.modelMatrix, sphere.translate, sphere.rotate, sphere.scale);
-					
+					utils.xformMatrix(sphere.modelMatrix, sphere.translate, null, sphere.scale);
+					v128.matrix.fromYRotation(r[1], rotationMatrix);
+					v128.matrix.multiply(rotationMatrix, sphere.modelMatrix, sphere.modelMatrix);
 					
 					//////////////////
 					// OCCLUSION TEST
@@ -564,11 +563,11 @@
 					gl.useProgram(hudProgram);
 					for (i = 0; i < NUM_SPHERES; ++i) {
 						sphere = spheres[i];
-						//if (!sphere.occluded) {
+						if (!sphere.occluded) {
 							gl.bindVertexArray(sphere.vertexArray);
 							gl.uniformMatrix4fv(hudModelMatrixLocation, false, v128.memory.toArray(sphere.modelMatrix));
 							gl.drawElements(gl.TRIANGLES, sphere.numElements, gl.UNSIGNED_SHORT, 0);
-						//}
+						}
 					}
 					gl.disable(gl.SCISSOR_TEST);
 					gl.disable(gl.BLEND);

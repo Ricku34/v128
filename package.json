@@ -1,14 +1,29 @@
 {
   "name": "v128",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "WebAssembly & Javascript module for fast 3D matrix vector calculations using SIMD vector 128 bits.",
   "main": "dist/v128-node.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack"
   },
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ricku34/v128.git"
+  },
+  "keywords": [
+    "3D",
+    "WebAssembly",
+    "SIMD",
+    "v128",
+    "SSE"
+  ],
+  "author": "Ricku34",
+  "license": "LGPL-2.1 AND BSD",
+  "bugs": {
+    "url": "https://github.com/Ricku34/v128/issues"
+  },
+  "homepage": "https://github.com/Ricku34/v128",
   "devDependencies": {
     "gl-matrix": "^3.4.3",
     "jsdoc-to-markdown": "^8.0.0",

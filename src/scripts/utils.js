@@ -16,6 +16,7 @@
 
 			utils.ZEROS = v128.vector.new(0, 0, 0, 0);
 			utils.ONES = v128.vector.new(1, 1, 1, 1);
+			utils.UP = v128.vector.new(0, 1, 0);
 
 			utils.xformMatrix = function xformMatrix(xform, translate, rotate, scale) {
 					translate = translate || utils.ZEROS;

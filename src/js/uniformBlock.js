@@ -51,16 +51,16 @@ exports.uniformBlock = function (v128Instance, v128) {
 						size += std140AlignByType[blockInfo[prop].type] * blockInfo[prop].size;
 					}
 				}
-				let pointor = v128.memory.alloc(size);
-				let pointors = new Object();
+				let pointer = v128.memory.alloc(size);
+				let pointers = new Object();
 				let ubo = new Object();
 				let offset = 0;
 				for (var prop in blockInfo) {
 					offset +=  offset % std140AlignByType[blockInfo[prop].type];
-					Object.defineProperty(pointors,prop,{
+					Object.defineProperty(pointers,prop,{
 						enumerable : true,
 						writable : false,
-						value: pointor + (offset * 4)
+						value: pointer + (offset * 4)
 					});
 					Object.defineProperty(ubo,prop,{
 						enumerable : true,
@@ -72,7 +72,7 @@ exports.uniformBlock = function (v128Instance, v128) {
 								else
 									return v128.memory.toArray(p,size);
 							}
-						})(prop, pointor + (offset * 4)),
+						})(prop, pointer + (offset * 4)),
 						set : (function(property, p) { 
 							return function (values) { 
 								var size = sizeByType[blockInfo[property].type];
@@ -85,7 +85,7 @@ exports.uniformBlock = function (v128Instance, v128) {
 									}
 								} 
 							}
-						})(prop, pointor + (offset * 4))
+						})(prop, pointer + (offset * 4))
 					});
 					offset += std140AlignByType[blockInfo[prop].type] * blockInfo[prop].size;
 				}
@@ -98,12 +98,12 @@ exports.uniformBlock = function (v128Instance, v128) {
 					buffer : {
 						enumerable : true,
 						writable : false,
-						value : v128.memory.toArray(pointor)
+						value : v128.memory.toArray(pointer)
 					},
-					pointors : {
+					pointers : {
 						enumerable : true,
 						writable : false,
-						value : pointors
+						value : pointers
 					},
 					info : {
 						enumerable : true,

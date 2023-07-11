@@ -4,7 +4,7 @@ exports.vector = function (v128Instance, v128) {
 		 * fast create new vector from initial values 
 		 * @method v128.vector#new
 		 * @param  {...Numbers} vals number values to fill into vector
-		 * @returns {UInt32} the pointor to new vector
+		 * @returns {UInt32} the pointer to new vector
 		 */
 		new : function(...vals) { 
 			var p = v128.memory.alloc(4);
@@ -16,7 +16,7 @@ exports.vector = function (v128Instance, v128) {
 		/**
 		 * free the vector
 		 * @method v128.vector#free
-		 * @param {UInt32} pointer  the pointor of vector to free
+		 * @param {UInt32} pointer  the pointer of vector to free
 		 */
 		free : v128.memory.free,
 		/**

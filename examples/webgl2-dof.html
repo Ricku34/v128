@@ -413,8 +413,8 @@
 		sceneUniformData.uLightPosition = [1, 1, 0.5];
 
 		var projMatrix = v128.matrix.perspective(Math.PI / 2, canvas.width / canvas.height, NEAR, FAR, v128.matrix.new());
-		var viewMatrix = v128.matrix.lookAt(sceneUniformData.pointors.uEyePosition, utils.ZEROS,v128.matrix.new());
-		v128.matrix.multiply(projMatrix, viewMatrix, sceneUniformData.pointors.uViewProj);
+		var viewMatrix = v128.matrix.lookAt(sceneUniformData.pointers.uEyePosition, utils.ZEROS, utils.UP, v128.matrix.new());
+		v128.matrix.multiply(projMatrix, viewMatrix, sceneUniformData.pointers.uViewProj);
 
 		var hTexelOffset = new Float32Array([1.0, 0.0]);
 		var vTexelOffset = new Float32Array([0.0, 1.0]);
