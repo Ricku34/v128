@@ -1,6 +1,6 @@
 {
   "name": "v128",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "WebAssembly & Javascript module for fast 3D matrix vector calculations using SIMD vector 128 bits.",
   "main": "dist/v128-node.js",
   "scripts": {
