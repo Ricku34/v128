@@ -1,0 +1,20 @@
+# IDE
+.vscode/
+
+# NodeJS
+node_modules/
+
+# Sources
+src/
+tests/
+
+# Build
+wabt/
+build/
+.npmignore
+.gitignore
+package-lock.json
+webpack.config.js
+Makefile
+
+# Exemples
