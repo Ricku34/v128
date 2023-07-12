@@ -2,6 +2,9 @@
 
 **v128** is an high performance javascript library for 3D matrix vector calculations using 128 bits vector type from [WebAssembly](https://webassembly.org/)
 
+## Installation :
+``` npm install v128 ```
+
 ## Getting started
 Web browser :
 ```HTML
@@ -9,7 +12,7 @@ Web browser :
 ```
 Node.js :
 ```JavaScript
-const v128 = require("v128");
+const {v128} = require("v128");
 ```
 
 ```JavaScript
@@ -25,6 +28,19 @@ WebGL compatibility :
 ```JavaScript
 gl.uniformMatrix4fv(projectionLocation, false, v128.memory.toArray(projectionMatrix));
 ```
+## How to build :
+
+**prerequisite :**
+ * [NodeJS & npm](https://nodejs.org/en/) 
+ * [CMake](https://cmake.org/)
+
+**step to build :**
+just type :
+
+``` 
+ > make
+ ```
+
 ## API Reference
 
 {{>main}}
